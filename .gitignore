@@ -1,10 +1,21 @@
 node_modules/
 output/
 debug/
-generated/
 
 *.zip
 
 .DS_Store
 
 !src/**/output
+
+# generated/
+generated/books/
+generated/gitbook/
+
+deploy_server_password.txt
+# common/config/deploy/deploy_server_password.txt
+
+# exclude all in books
+books/**/*
+# include only single subfolder: honkit_demo
+!books/honkit_demo
