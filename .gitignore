@@ -1,0 +1,10 @@
+node_modules/
+output/
+debug/
+generated/
+
+*.zip
+
+.DS_Store
+
+!src/**/output

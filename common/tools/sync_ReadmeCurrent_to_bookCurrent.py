@@ -1,0 +1,128 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+"""
+Author: Crifan Li
+Update: 20220331
+Function: Sync README_current.json content to book_current.json
+Note: should run this python file from single honkit foler
+      eg: /Users/crifan/dev/DevRoot/crifan/honkit/honkit_template/books/honkit_demo
+"""
+
+import os
+import json
+import codecs
+from pprint import pprint
+
+################################################################################
+# Global Config
+################################################################################
+
+ReadmeCurrentJsonFilename = "README_current.json"
+BookCurrentJsonFilename = "book_current.json"
+
+# Speical: only use crifan.github.io, not use book.crifan.org/books
+OnlyUseGithubIoBookList = [
+  "scientific_network_summary",
+]
+
+BookRoot_crifan = "book.crifan.org/books"
+BookRoot_github = "crifan.github.io"
+
+################################################################################
+# Internal Function
+################################################################################
+
+def loadJsonFromFile(fullFilename, fileEncoding="utf-8"):
+    """load and parse json dict from file"""
+    with codecs.open(fullFilename, 'r', encoding=fileEncoding) as jsonFp:
+        jsonDict = json.load(jsonFp)
+        # logging.debug("Complete load json from %s", fullFilename)
+        return jsonDict
+
+def saveJsonToFile(jsonDict, fullFilename, indent=2, fileEncoding="utf-8"):
+    """
+      save dict json into file
+      for non-ascii string, output encoded string, without \\uxxxx
+    """
+    with codecs.open(fullFilename, 'w', encoding="utf-8") as outputFp:
+        json.dump(jsonDict, outputFp, indent=indent, ensure_ascii=False)
+
+################################################################################
+# Main Part
+################################################################################
+
+readmeCurrentJson = {}
+bookCurrentJson = {}
+
+# run python in :
+currPath = os.getcwd()
+print("currPath=%s" % currPath)
+curDirname = os.path.dirname(currPath)
+print("curDirname=%s" % curDirname) # /Users/crifan/dev/DevRoot/crifan/honkit/honkit_template/books
+curBasename = os.path.basename(currPath)
+print("curBasename=%s" % curBasename) # honkit_demo
+HonkitSrcRootBooks = curDirname
+print("HonkitSrcRootBooks=%s" % HonkitSrcRootBooks)
+HonkitSrcRoot = os.path.abspath(os.path.join(HonkitSrcRootBooks, ".."))
+print("HonkitSrcRoot=%s" % HonkitSrcRoot)
+
+CurrentBookPath = currPath
+print("CurrentBookPath=%s" % CurrentBookPath)
+
+CurrentHonkitName = curBasename
+# print("CurrentHonkitName=%s" % CurrentHonkitName)
+# youdao_note_summary
+# honkit_demo
+
+readmeCurrentJsonFullPath = os.path.join(CurrentBookPath, ReadmeCurrentJsonFilename)
+# print("readmeCurrentJsonFullPath=%s" % readmeCurrentJsonFullPath)
+readmeCurrentJson = loadJsonFromFile(readmeCurrentJsonFullPath)
+
+bookCurrentJsonFullPath = os.path.join(CurrentBookPath, BookCurrentJsonFilename)
+# print("bookCurrentJsonFullPath=%s" % bookCurrentJsonFullPath)
+bookCurrentJson = loadJsonFromFile(bookCurrentJsonFullPath)
+
+# pprint("/"*80)
+# pprint(readmeCurrentJson)
+# pprint("/"*80)
+# pprint(bookCurrentJson)
+
+gitRepoName = readmeCurrentJson["gitRepoName"]
+# print("gitRepoName=%s" % gitRepoName)
+bookName = readmeCurrentJson["bookName"]
+# print("bookName=%s" % bookName)
+bookDescription = readmeCurrentJson["bookDescription"]
+# print("bookDescription=%s" % bookDescription)
+
+bookCurrentJson["title"] = bookName
+bookCurrentJson["description"] = bookDescription
+pluginsConfig = bookCurrentJson["pluginsConfig"]
+# print("pluginsConfig=%s" % pluginsConfig)
+pluginsConfig["github-buttons"]["buttons"][0]["repo"] = gitRepoName
+
+if gitRepoName in OnlyUseGithubIoBookList:
+  curBookRoot = BookRoot_github
+else:
+  curBookRoot = BookRoot_crifan
+# print("curBookRoot=%s" % curBookRoot)
+# curBookRoot=crifan.github.io
+curBookRootPrefix = "https://%s/%s" % (curBookRoot, gitRepoName)
+# print("curBookRootPrefix=%s" % curBookRootPrefix)
+# curBookRootPrefix=https://crifan.github.io/scientific_network_summary
+
+# PrefixTemplate = "https://book.crifan.org/books/%s/website/"
+newPrefix = "%s/website/" % curBookRootPrefix
+# print("newPrefix=%s" % newPrefix)
+# newPrefix=https://crifan.github.io/scientific_network_summary/website/
+pluginsConfig["sitemap-general"]["prefix"] = newPrefix
+# UrlTemplate = "https://book.crifan.org/books/%s/pdf/%s.pdf"
+# newUrl = UrlTemplate % (gitRepoName, gitRepoName)
+newUrl = "%s/pdf/%s.pdf" % (curBookRootPrefix, gitRepoName)
+# print("newUrl=%s" % newUrl)
+# newUrl=https://crifan.github.io/scientific_network_summary/pdf/scientific_network_summary.pdf
+pluginsConfig["toolbar-button"]["url"] = newUrl
+
+# print("Updated %s:" % BookCurrentJsonFilename)
+# pprint(bookCurrentJson)
+saveJsonToFile(bookCurrentJson, bookCurrentJsonFullPath)
+print("Saved json to file %s" % bookCurrentJsonFullPath)
