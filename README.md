@@ -1,6 +1,6 @@
 # HonKit模板
 
-最后更新：`20220405`
+最后更新：`20220611`
 
 ## 项目代码仓库
 
@@ -65,30 +65,15 @@
 
 ## 为何会有这个模板？
 
-之前自己用`Gitbook`创建了很多个`book`，为了更高效和统一管理，所以把公共部分提取出来。
+之前自己用`Gitbook`创建了很多个`book`，为了更高效和统一管理，所以把公共部分提取出来，整理成模板：
 
-为了让此gitbook的框架能为别人所用，所以整理出来，做成模板和demo，供参考和使用。
+[https://github.com/crifan/gitbook_template](https://github.com/crifan/gitbook_template)
 
-此模板从无到有的过程，感兴趣的可以去看看：
+而后来`Gitbook`官网已放弃维护`gitbook`，后续如继续使用，有无法正常更新和迁移困难的风险。
 
-* [【已解决】提取Gitbook中Makefile公共部分](http://www.crifan.org/gitbook_extract_common_part_of_makefile)
-* [【已解决】gitbook中book.json中能否把公共部分提取出来](http://www.crifan.org/gitbook_extract_book_json_common_part)
-* [【基本解决】Makefile中从独立文件比如json中读取配置变量](http://www.crifan.org/makefile_import_read_config_variable_from_file_like_json)
-* [【规避解决】gitbook install时能否指定node_modules的安装路径](http://www.crifan.org/gitbook_install_whether_designate_node_modules_install_path)
-* [【已解决】优化gitbook的生成book模板提取共用的node_modules](http://www.crifan.org/optimize_gitbook_generate_book_template_extract_common_node_modules)
-
-
-而后来Gitbook官网已放弃维护，后续继续长期使用，有无法正常更新和迁移的风险。
-
-经过寻找替代品，最后找到了：Honkit，所以继续制作此Honkit的模板，供自己和别人参考使用。
+经过寻找替代品，最后找到了：`Honkit`，所以继续制作此Honkit的模板，供自己和别人参考使用。
 
 ## 使用步骤
-
----
-
-TODO：更新下面的内容
-
----
 
 简述：
 
@@ -98,21 +83,23 @@ TODO：更新下面的内容
 git clone https://github.com/crifan/honkit_template.git
 
 cd honkit_template
-mkdir -p generated/honkit/node_modules
+# mkdir -p generated/honkit/node_modules
 mkdir -p generated/books
 
 cd books/honkit_demo/
 npm install -s gitbook-plugin-anchors gitbook-plugin-callouts gitbook-plugin-chapter-fold gitbook-plugin-copy-code-button gitbook-plugin-disqus gitbook-plugin-donate gitbook-plugin-expandable-menu gitbook-plugin-folding-chapters-2 gitbook-plugin-github-buttons gitbook-plugin-prism gitbook-plugin-prism-themes gitbook-plugin-search-plus gitbook-plugin-sharing-plus gitbook-plugin-sitemap-general gitbook-plugin-splitter-nosessionbutcookie gitbook-plugin-tbfed-pagefooter gitbook-plugin-theme-comscore gitbook-plugin-toggle-chapters gitbook-plugin-toolbar-button
-mv node_modules ../../generated/honkit
-ln -s ../../generated/honkit/node_modules node_modules
 
-make init
+# Update: 20220611, current HonKit has bug, if use soft link node_modules, will cause Reload deadlock, so temp no use soft link node_modules
+# mv node_modules ../../generated/honkit
+# ln -s ../../generated/honkit/node_modules node_modules
+
+# make init
 
 make debug
 
-make all
+# make all
 
-make deploy
+# make deploy
 ```
 
 * 之前每次book内部变化，只需要
@@ -133,37 +120,23 @@ make deploy
 可以通过下面命令确认是否已安装好`HonKit`：
 
 ```bash
-$ gitbook --version
-CLI version: 2.3.2
-GitBook version: 3.2.3
+✗ npx honkit --version
+3.7.1
 ```
-
-#### 手动修复bug：ENOENT no such file or directory
-
-gitbook有个bug：
-
-`make debug`偶尔会出现这个错误： `Error: ENOENT: no such file or directory, stat '/Users/crifan/dev/dev_root/gitbook/GitbookTemplate/gitbook_template/gitbook_demo/debug/gitbook/gitbook-plugin-copy-code-button/toggle.js'`
-
-解决办法：
-
-把
-
-`/Users/换成你的用户名/.gitbook/versions/3.2.3/lib/output/website/copyPluginAssets.js`
-
-中的`copyResources`中`fs.copyDir`的`confirm`从`true`改为`false`
-
-具体步骤，详见：
-
-* [【已解决】gitbook编译偶尔报错：Error ENOENT no such file or directory stat](http://www.crifan.org/gitbook_compile_occasionally_error_enoent_no_such_file_or_directory_stat)
 
 ### 下载模板源码
 
-`git clone https://github.com/crifan/gitbook_template.git`
+`git clone https://github.com/crifan/honkit_template.git`
+
+
+------
+
+TODO: 抽空更新下面的内容
 
 ### 初始化安装`Gitbook`插件
 
 ```bash
-cd gitbook_template/books/gitbook_demo/
+cd honkit_template/books/honkit_demo/
 rm -rf node_modules/
 make init
 ```
@@ -384,9 +357,9 @@ BookRoot_github = "crifan.github.io"
 
 ### 备份的`node_modules_selfMac.zip`
 
-新增了`common/backup/node_modules_selfMac.zip`，是自己的Mac中的`generated/gitbook/node_modules`的压缩包
+新增了`common/backup/node_modules_selfMac.zip`，是自己的Mac中的`generated/honkit/node_modules`的压缩包
 
-作用：万一，自己的或别人node_modules的环境被破坏了，或者想要换电脑但快速搭建gitbook环境，则可以快速的直接用此`node_modules_selfMac.zip`，解压后替换/覆盖到`generated/gitbook/node_modules`，即可。
+作用：万一，自己的或别人node_modules的环境被破坏了，或者想要换电脑但快速搭建gitbook环境，则可以快速的直接用此`node_modules_selfMac.zip`，解压后替换/覆盖到`generated/honkit/node_modules`，即可。
 
 ### 根据SUMMARY.md自动生成和更新子md文件
 
@@ -492,13 +465,13 @@ RSYNC_PROXY = -e "ssh -o 'ProxyCommand nc -X 5 -x $(PROXY_SOCK5) %h %p' -o Serve
 
 在第一次某个book的`make init`后（内部会调用`gitbook install`），会生成`node_modules`目录
 
-则可以把`node_modules`移动到`generated/gitbook`：
+则可以把`node_modules`移动到`generated/honkit`：
 
-`mv node_modules ../../generated/gitbook/node_modules`
+`mv node_modules ../../generated/honkit/node_modules`
 
 然后再去当前book中加上软链接：
 
-`ln -s ../../generated/gitbook/node_modules node_modules`
+`ln -s ../../generated/honkit/node_modules node_modules`
 
 以后新增book时，只需要重新创建对应软链接即可。
 

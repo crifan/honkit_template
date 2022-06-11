@@ -10,7 +10,7 @@ debug/
 
 # generated/
 generated/books/
-generated/gitbook/
+generated/honkit/
 
 deploy_server_password.txt
 # common/config/deploy/deploy_server_password.txt

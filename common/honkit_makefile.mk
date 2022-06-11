@@ -371,10 +371,12 @@ status:
 # Generate Files
 ################################################################################
 
-# HONKIT_COMMON_FLAGS= 
-HONKIT_COMMON_FLAGS= --log debug
+HONKIT_COMMON_FLAGS= 
+# HONKIT_COMMON_FLAGS= --log debug
+# HONKIT_COMMON_FLAGS= --log debug --reload
 # HONKIT_COMMON_FLAGS= --log debug --trace-deprecation
-HONKIT_COMMON_DEBUG_FLAGS= ${HONKIT_COMMON_FLAGS} --port $(HONKIT_DEBUG_PORT) --lrport $(HONKIT_DEBUG_LRPORT) 
+# HONKIT_COMMON_DEBUG_FLAGS= ${HONKIT_COMMON_FLAGS} --port $(HONKIT_DEBUG_PORT) --lrport $(HONKIT_DEBUG_LRPORT) 
+HONKIT_COMMON_DEBUG_FLAGS= ${HONKIT_COMMON_FLAGS}
 HONKIT_COMMON_RELEASE_FLAGS= ${HONKIT_COMMON_FLAGS} --timing
 
 #	 gitbook --port $(HONKIT_DEBUG_PORT) --lrport $(HONKIT_DEBUG_LRPORT) serve $(CURRENT_DIR) $(DEBUG_PATH) $(HONKIT_COMMON_FLAGS)
