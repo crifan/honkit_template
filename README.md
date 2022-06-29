@@ -1,6 +1,6 @@
 # HonKit模板
 
-最后更新：`20220611`
+最后更新：`20220629`
 
 ## 项目代码仓库
 
@@ -175,10 +175,10 @@ make all
 
 **作用**：内部会分别调用
 
-* `gitbook build`：生成**静态**`html`
-* `gitbook pdf`：生成`pdf`文件
-* `gitbook epub`：生成`epub`文件
-* `gitbook mobi`：生成`mobi`文件
+* `npx honkit build`：生成**静态**`html`
+* `npx honkit pdf`：生成`pdf`文件
+* `npx honkit epub`：生成`epub`文件
+* `npx honkit mobi`：生成`mobi`文件
 
 生成的文件都保存到了`generated/books/gitbook_demo/release/gitbook_demo`文件夹中：
 
@@ -331,6 +331,12 @@ make deploy
 
 ## 其他说明
 
+### 备份的`node_modules_companyMac.7z`
+
+新增了`common/backup/node_modules_companyMac.7z`，是公司Mac中的`generated/honkit/node_modules`的压缩包
+
+作用：万一，自己的或别人node_modules的环境被破坏了，或者想要换电脑但快速搭建HonKit环境，则可以快速的直接用此`node_modules_companyMac.7z`，解压后放到`generated/honkit/node_modules`，即可。
+
 ### 特殊处理：OnlyUseGithubIoBookList
 
 如果想要对部分特殊的book：
@@ -354,12 +360,6 @@ BookRoot_github = "crifan.github.io"
 ```
 
 更新为自己的book的repo的name即可。
-
-### 备份的`node_modules_selfMac.zip`
-
-新增了`common/backup/node_modules_selfMac.zip`，是自己的Mac中的`generated/honkit/node_modules`的压缩包
-
-作用：万一，自己的或别人node_modules的环境被破坏了，或者想要换电脑但快速搭建gitbook环境，则可以快速的直接用此`node_modules_selfMac.zip`，解压后替换/覆盖到`generated/honkit/node_modules`，即可。
 
 ### 根据SUMMARY.md自动生成和更新子md文件
 
