@@ -1,7 +1,7 @@
 # HonKit演示
 
-* 最新版本：`v1.0`
-* 更新时间：`20220405`
+* 最新版本：`v1.1`
+* 更新时间：`20220629`
 
 ## 简介
 
@@ -13,7 +13,7 @@ crifan的HonKit模版，用于演示如何用HonKit创建一个自己的book电�
 
 ### HonKit源码
 
-* [crifan/honkit_demo: HonKit演示](https://github.com/crifan/honkit_demo)
+* [crifan/honkit_demo: HonKit演示](https://gitee.com/crifan/honkit_demo)
 
 #### 如何使用此HonKit源码去生成发布为电子书
 

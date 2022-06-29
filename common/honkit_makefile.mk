@@ -136,7 +136,7 @@ endef
 # Output current makefile info
 ################################################################################
 Author=crifan.org
-Version=20220404
+Version=20220629
 Function=Auto use Honkit to generated files: website/pdf/epub/mobi; upload to remote server; commit to your github.io repository
 RunHelp = Run 'make help' to see usage
 GitRepo = Latest version: https://github.com/crifan/honkit_template
@@ -255,6 +255,7 @@ create_folder_website:
 
 ## Create folder for pdf
 create_folder_pdf: 
+	@echo create folder: $(PDF_PATH)
 	mkdir -p $(PDF_PATH)
 
 ## Create folder for epub
@@ -394,19 +395,19 @@ website: sync_content clean_website create_folder_website
 pdf: sync_content clean_pdf create_folder_pdf
 	@echo ================================================================================
 	@echo Generate PDF for $(BOOK_NAME)
-	gitbook pdf $(HONKIT_COMMON_RELEASE_FLAGS) $(CURRENT_DIR) $(PDF_FULLNAME)
+	npx honkit pdf $(CURRENT_DIR) $(PDF_FULLNAME)
 
 ## Generate ePub file
 epub: sync_content clean_epub create_folder_epub
 	@echo ================================================================================
 	@echo Generate ePub for $(BOOK_NAME)
-	gitbook epub $(HONKIT_COMMON_RELEASE_FLAGS) $(CURRENT_DIR) $(EPUB_FULLNAME)
+	npx honkit epub $(CURRENT_DIR) $(EPUB_FULLNAME)
 
 ## Generate Mobi file
 mobi: sync_content clean_mobi create_folder_mobi
 	@echo ================================================================================
 	@echo Generate Mobi for $(BOOK_NAME)
-	gitbook mobi $(HONKIT_COMMON_RELEASE_FLAGS) $(CURRENT_DIR) $(MOBI_FULLNAME)
+	npx honkit mobi $(CURRENT_DIR) $(MOBI_FULLNAME)
 
 ## Generate all files: website/pdf/epub/mobi
 all: website pdf epub mobi
