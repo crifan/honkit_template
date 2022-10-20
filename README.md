@@ -1,6 +1,6 @@
 # HonKit模板
 
-最后更新：`20220629`
+最后更新：`20221020`
 
 ## 项目代码仓库
 
@@ -193,7 +193,7 @@ make init
 
 插件安装后效果如图：
 
-![Gitbook的install插件到node_modules](img/gitbook_installed_plugin_node_modules.png)
+![Gitbook的install插件到node_modules](img/honkit_installed_plugin_node_modules.png)
 
 ### 调试+编写`book`源码
 
@@ -209,9 +209,9 @@ make debug
 
 看到此`gitbook`模板demo的效果了：
 
-![Gitbook的debug的localhost效果](img/gitbook_debug_localhost.png)
+![Gitbook的debug的localhost效果](img/honkit_debug_localhost.png)
 
-![Gitbook的各种hint/callout提示的效果](img/gitbook_various_hint_callout_effect.png)
+![Gitbook的各种hint/callout提示的效果](img/honkit_various_hint_callout_effect.png)
 
 然后就可以去用编辑器，比如[VSCode](https://book.crifan.org/books/best_editor_vscode/website/)，去编辑和更新自己的`markdown`=`md`源码了，然后gitbook会自动检测到文件变动，刷新页面。
 
@@ -230,7 +230,7 @@ make all
 
 生成的文件都保存到了`generated/books/gitbook_demo/release/gitbook_demo`文件夹中：
 
-![gitbook生成各种文件到release文件夹中](img/gitbook_generated_all_files_to_ouput_folder.png)
+![gitbook生成各种文件到release文件夹中](img/honkit_generated_all_files_to_ouput_folder.png)
 
 ### [可选]提交`commit`+部署`deploy`
 
