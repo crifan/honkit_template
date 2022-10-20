@@ -13,7 +13,7 @@
 
 ### HonKit源码
 
-* [crifan/{{gitRepoName}}: {{bookName}}](https://gitee.com/crifan/{{gitRepoName}})
+* [crifan/{{gitRepoName}}: {{bookName}}](https://github.com/crifan/{{gitRepoName}})
 
 #### 如何使用此HonKit源码去生成发布为电子书
 
