@@ -32,6 +32,7 @@
 │       ├── Makefile            # 调用公共的Makefile
 │       ├── README_current.json # 当前book的readme的部分，内部调用 common/tools/generate_readme_md.py 生成真正的 README.md
 │       ├── book_current.json   # 当前book的book.json的部分，内部调用 common/tools/generate_book_json.py 生成完整的book.json
+│       ├── node_modules -> ../../generated/honkit/node_modules   # 当前book编译时所依赖的js库，使用统一 generated/honkit/node_modules 的软链接即可，而无需每个book都重新安装一遍
 │       └── src                 # 当前gitbook的源码部分
 │           ├── README.md       # 同步拷贝自 上级目录中生成的README.md
 ......
@@ -89,10 +90,44 @@ mkdir -p generated/books
 cd books/honkit_demo/
 npm install -s gitbook-plugin-anchors gitbook-plugin-callouts gitbook-plugin-chapter-fold gitbook-plugin-copy-code-button gitbook-plugin-disqus gitbook-plugin-donate gitbook-plugin-expandable-menu gitbook-plugin-folding-chapters-2 gitbook-plugin-github-buttons gitbook-plugin-prism gitbook-plugin-prism-themes gitbook-plugin-search-plus gitbook-plugin-sharing-plus gitbook-plugin-sitemap-general gitbook-plugin-splitter-nosessionbutcookie gitbook-plugin-tbfed-pagefooter gitbook-plugin-theme-comscore gitbook-plugin-toggle-chapters gitbook-plugin-toolbar-button
 
-# Update: 20220611, current HonKit has bug, if use soft link node_modules, will cause Reload deadlock, so temp no use soft link node_modules
-# mv node_modules ../../generated/honkit
-# ln -s ../../generated/honkit/node_modules node_modules
+```
 
+* 关于`node_modules`
+  * Update: 20220611, current HonKit has bug, if use soft link node_modules, will cause Reload deadlock, so temp no use soft link node_modules
+  * Update: 20221020, has fix HonKit bug, now can use soft link node_modules
+
+先去修复Honkit的bug：
+
+`node_modules/honkit/lib/cli/watch.js`
+从：
+
+`ignored: "_book/**",`
+
+改为：
+
+`ignored: ["_book/**", "node_modules/**"],`
+
+修改后，相关部分完整代码：
+
+```js
+    const watcher = chokidar_1.default.watch(toWatch, {
+        cwd: dir,
+        // ignored: "_book/**",
+        ignored: ["_book/**", "node_modules/**"],
+        ignoreInitial: true,
+    });
+```
+
+接着把`node_modules`移动到通用目录：
+
+```bash
+mv node_modules ../../generated/honkit
+ln -s ../../generated/honkit/node_modules node_modules
+```
+
+然后即可正常调试：
+
+```bash
 # make init
 
 make debug
@@ -102,14 +137,27 @@ make debug
 # make deploy
 ```
 
-* 之前每次book内部变化，只需要
+可以看到输出：
+
+```bash
+finish!
+info: >> generation finished with success in 2.8s ! 
+Serving book on http://localhost:4000
+```
+
+然后用浏览器去打开：
+
+http://localhost:4000
+
+即可看到自己的电子书内容了
+
+* 之后每次book内部变化，只需要
 
 ```bash
 make debug
 
 make deploy
 ```
-
 
 下面详细介绍，如何使用本`HonKit`模板，去创建一个自己的`book`
 
