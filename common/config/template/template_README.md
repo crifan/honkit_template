@@ -30,9 +30,11 @@
 * [{{bookName}} ePub](https://book.crifan.org/books/{{gitRepoName}}/epub/{{gitRepoName}}.epub)
 * [{{bookName}} Mobi](https://book.crifan.org/books/{{gitRepoName}}/mobi/{{gitRepoName}}.mobi)
 
-## 版权说明
+## 版权和用途说明
 
-此电子书教程的全部内容，如无特别说明，均为本人原创和整理。其中部分内容参考自网络，均已备注了出处。如有发现侵犯您版权，请通过邮箱联系我 `admin 艾特 crifan.com`，我会尽快删除。谢谢合作。
+此电子书教程的全部内容，如无特别说明，均为本人原创。其中部分内容参考自网络，均已备注了出处。如有版权，请通过邮箱联系我 `admin 艾特 crifan.com`，我会尽快删除。谢谢合作。
+
+各种技术类教程，仅作为学习和研究使用。请勿用于任何非法用途。如有非法用途，均与本人无关。
 
 ## 鸣谢
 
