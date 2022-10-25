@@ -1,6 +1,6 @@
 # HonKit模板
 
-最后更新：`20221020`
+最后更新：`20221025`
 
 ## 项目代码仓库
 
@@ -421,42 +421,12 @@ BookRoot_github = "crifan.github.io"
 
 用法举例：
 
-```bash
-python generate_md_from_summary.py -f /Users/limao/dev/crifan/gitbook/gitbook_template/books/linux_usage_dev_summary/src/SUMMARY.md
+处于book的更目录，然后：
 
-python ../../common/tools/generate_md_from_summary.py -f /Users/limao/dev/crifan/gitbook/gitbook_template/books/infiltrate_your_net_penetration_testing/src/SUMMARY.md
-
-python ../../common/tools/generate_md_from_summary.py --disable-update-existed-md -f /Users/limao/dev/crifan/gitbook/gitbook_template/books/infiltrate_your_net_penetration_testing/src/SUMMARY.md
-
-python ../../common/tools/generate_md_from_summary.py --disable-update-existed-md --disable-random-time -f /Users/limao/dev/crifan/gitbook/gitbook_template/books/infiltrate_your_net_penetration_testing/src/SUMMARY.md
-
-python ../../common/tools/generate_md_from_summary.py --random-range 1200 -f /Users/limao/dev/crifan/gitbook/gitbook_template/books/infiltrate_your_net_penetration_testing/src/SUMMARY.md
-
-python ../../common/tools/generate_md_from_summary.py -f /Users/limao/dev/crifan/gitbook/gitbook_template/books/infiltrate_your_net_penetration_testing/src/SUMMARY.md
-
-
-Book root path:
-
-python ../../common/tools/generate_md_from_summary.py -e /Users/limao/dev/crifan/gitbook/gitbook_template/books/industrial_control_security_overview/
-
-python ../../common/tools/generate_md_from_summary.py -e /Users/limao/dev/crifan/gitbook/gitbook_template/books/infiltrate_your_net_penetration_testing/
-
-Summary.md file:
-
-python ../../common/tools/generate_md_from_summary.py -e /Users/limao/dev/crifan/gitbook/gitbook_template/books/information_security_overview/src/SUMMARY.md
-
-
-20210720 Unified all:
-
-for update md:
-
-python ../../common/tools/generate_md_from_summary.py -e .
-
-for generate md:
-
-python ../../common/tools/generate_md_from_summary.py -e . -m summary
-
-```
+* update md
+  * `python ../../common/tools/generate_md_from_summary.py -e .`
+* generate md
+  * `python ../../common/tools/generate_md_from_summary.py -e . -m summary`
 
 ### 指定debug的端口用于同时debug多个book
 
