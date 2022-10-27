@@ -136,7 +136,7 @@ endef
 # Output current makefile info
 ################################################################################
 Author=crifan.org
-Version=20220629
+Version=20221027
 Function=Auto use Honkit to generated files: website/pdf/epub/mobi; upload to remote server; commit to your github.io repository
 RunHelp = Run 'make help' to see usage
 GitRepo = Latest version: https://github.com/crifan/honkit_template
@@ -385,11 +385,11 @@ HONKIT_COMMON_RELEASE_FLAGS= ${HONKIT_COMMON_FLAGS} --timing
 debug: sync_content clean_debug create_folder_debug
 	npx honkit serve $(HONKIT_COMMON_DEBUG_FLAGS) $(CURRENT_DIR) $(DEBUG_PATH)
 
-## Generate gitbook website
+## Generate honkit website
 website: sync_content clean_website create_folder_website
 	@echo ================================================================================
 	@echo Generate website for $(BOOK_NAME)
-	gitbook build $(HONKIT_COMMON_RELEASE_FLAGS) $(CURRENT_DIR) $(WEBSITE_FULLNAME)
+	npx honkit build $(HONKIT_COMMON_RELEASE_FLAGS) $(CURRENT_DIR) $(WEBSITE_FULLNAME)
 
 ## Generate PDF file
 pdf: sync_content clean_pdf create_folder_pdf

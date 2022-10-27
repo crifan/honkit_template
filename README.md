@@ -1,6 +1,6 @@
 # HonKit模板
 
-最后更新：`20221025`
+最后更新：`20221027`
 
 ## 项目代码仓库
 
@@ -331,13 +331,15 @@ git clone https://github.com/crifan/python_common_code_snippet.git
 cd python_common_code_snippet
 ```
 
-然后手动拷贝模板book`gitbook_demo`中的所有内容到当前目录：
+然后手动拷贝模板book`honkit_demo`中的所有内容到当前目录：
 
 ```bash
-cp -a ../gitbook_demo/* .
+cp -a ../honkit_demo/* .
 ```
 
-编辑自己的`book_current.json`和`README_current.json`，更新你的版本号，文件描述，book的name等。
+编辑`README_current.json`，更新你的版本号，文件描述，book的name等。
+
+注：无需更新`book_current.json`，其`make debug`内部会自动更新。
 
 再去同步更新内容：
 
@@ -353,6 +355,12 @@ make sync_content
 
 然后再去编辑自己的书的目录：`src/SUMMARY.md`
 
+然后如果`SUMMARY.md`中目录较多，可以借助于脚本自动生成：
+
+```bash
+python ../../common/tools/generate_md_from_summary.py -e . -m summary
+```
+
 然后去：
 
 ```bash
@@ -365,9 +373,9 @@ make debug
 
 http://localhost:4000/
 
-之后就是：更新你的各种`md`文件内容了
+之后就是更新你的各种`md`文件内容了
 
-如果一切正常，gitbook系统会自动检测到`md`文件的改动，触发重新编译，自动刷新页面内容。
+如果一切正常，`Honkit`系统会自动检测到`md`文件的改动，触发重新编译，自动刷新页面内容。
 
 最后内容完成后，再去：
 
