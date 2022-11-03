@@ -15,15 +15,15 @@ $(info CURRENT_USER=$(CURRENT_USER))
 # Global Config
 ################################################################################
 
-ENABLE_DEPLOY_SERVER = false
-ENABLE_COMMIT_GITHUB_IO = false
-ENABLE_UPDATE_GITHUB_IO_README = false
-ENABLE_RSYNC_PROXY = false
+# ENABLE_DEPLOY_SERVER = false
+# ENABLE_COMMIT_GITHUB_IO = false
+# ENABLE_UPDATE_GITHUB_IO_README = false
+# ENABLE_RSYNC_PROXY = false
 
-# ENABLE_DEPLOY_SERVER = true
-# ENABLE_COMMIT_GITHUB_IO = true
-# ENABLE_UPDATE_GITHUB_IO_README = true
-# ENABLE_RSYNC_PROXY = true
+ENABLE_DEPLOY_SERVER = true
+ENABLE_COMMIT_GITHUB_IO = true
+ENABLE_UPDATE_GITHUB_IO_README = true
+ENABLE_RSYNC_PROXY = true
 
 # default: rsync not use any proxy
 RSYNC_PROXY = 

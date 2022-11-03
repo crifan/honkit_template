@@ -1,6 +1,6 @@
 # HonKit模板
 
-最后更新：`20221027`
+最后更新：`20221103`
 
 ## 项目代码仓库
 
@@ -391,7 +391,59 @@ make deploy
 
 新增了`common/backup/node_modules_companyMac.7z`，是公司Mac中的`generated/honkit/node_modules`的压缩包
 
-作用：万一，自己的或别人node_modules的环境被破坏了，或者想要换电脑但快速搭建HonKit环境，则可以快速的直接用此`node_modules_companyMac.7z`，解压后放到`generated/honkit/node_modules`，即可。
+作用：万一，自己的或别人node_modules的环境被破坏了，或者想要换电脑但快速搭建`HonKit`环境，则可以快速的直接用此`node_modules_companyMac.7z`，解压后移动到`generated/honkit/node_modules`，即可。
+
+### prism的alias支持
+
+honkit（即gitbook）的prism插件默认不支持alias
+
+-> 会报错：
+
+```bash
+Error: Cannot find module 'prismjs/components/prism-objc.js'
+...
+  code: 'MODULE_NOT_FOUND',
+```
+
+想要支持alias，可以自己去加进去
+
+举例：
+
+加上：
+
+* `oc`=`objectivec`
+* `objc`=`objectivec`
+* `asm`=`nasm`
+
+变成：
+
+`generated/honkit/node_modules/gitbook-plugin-prism/index.js`
+
+```js
+var MAP_LANGUAGES = {
+  'oc': 'objectivec',
+  'objc': 'objectivec',
+  'asm': 'nasm',
+  'py': 'python',
+  'js': 'javascript',
+  'rb': 'ruby',
+  'cs': 'csharp',
+  'sh': 'bash',
+  'html': 'markup'
+};
+```
+
+Markdown代码中就可以用了：
+
+``````md
+```objc
+...
+```
+``````
+
+详见：
+
+【已解决】Honkit中prism的语法高亮支持的语言
 
 ### 特殊处理：OnlyUseGithubIoBookList
 
