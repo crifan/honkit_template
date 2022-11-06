@@ -21,8 +21,8 @@
 
 ### 在线浏览
 
-* [{{bookName}} book.crifan.org](https://book.crifan.org/books/{{gitRepoName}}/website)
-* [{{bookName}} crifan.github.io](https://crifan.github.io/{{gitRepoName}}/website)
+* [{{bookName}} book.crifan.org](https://book.crifan.org/books/{{gitRepoName}}/website/)
+* [{{bookName}} crifan.github.io](https://crifan.github.io/{{gitRepoName}}/website/)
 
 ### 离线下载阅读
 
@@ -40,8 +40,16 @@
 
 感谢我的老婆**陈雪**的包容理解和悉心照料，才使得我`crifan`有更多精力去专注技术专研和整理归纳出这些电子书和技术教程，特此鸣谢。
 
-## 更多其他电子书
+## 其他
+
+### 作者的其他电子书
 
 本人`crifan`还写了其他`150+`本电子书教程，感兴趣可移步至：
 
 [crifan/crifan_ebook_readme: Crifan的电子书的使用说明](https://github.com/crifan/crifan_ebook_readme)
+
+### 关于作者
+
+关于作者更多介绍，详见：
+
+[关于CrifanLi李茂 – 在路上](https://www.crifan.org/about/)
