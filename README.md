@@ -1,6 +1,6 @@
 # HonKit模板
 
-最后更新：`20221103`
+最后更新：`20230528`
 
 ## 项目代码仓库
 
@@ -33,7 +33,7 @@
 │       ├── README_current.json # 当前book的readme的部分，内部调用 common/tools/generate_readme_md.py 生成真正的 README.md
 │       ├── book_current.json   # 当前book的book.json的部分，内部调用 common/tools/generate_book_json.py 生成完整的book.json
 │       ├── node_modules -> ../../generated/honkit/node_modules   # 当前book编译时所依赖的js库，使用统一 generated/honkit/node_modules 的软链接即可，而无需每个book都重新安装一遍
-│       └── src                 # 当前gitbook的源码部分
+│       └── src                 # 当前honkit的源码部分
 │           ├── README.md       # 同步拷贝自 上级目录中生成的README.md
 ......
 ├── common
@@ -58,10 +58,10 @@
 │   ├── books                               # 保存每个book生成的各种文件，包括pdf，html等等
 │   └── honkit                              # 保存honkit生成的文件，目前只有共用的node_modules
 ├── img                                     # 保存此README.md说明文档所用到的图片
-│   ├── honkit_debug_localhost.png
-│   ├── honkit_generated_all_files_to_ouput_folder.png
-│   ├── honkit_installed_plugin_node_modules.png
-│   └── honkit_various_hint_callout_effect.png
+│   ├── honkit_debug_localhost.jpg
+│   ├── honkit_generated_all_files_to_ouput_folder.jpg
+│   ├── honkit_installed_plugin_node_modules.jpg
+│   └── honkit_various_hint_callout_effect.jpg
 ```
 
 ## 为何会有这个模板？
@@ -84,48 +84,24 @@
 git clone https://github.com/crifan/honkit_template.git
 
 cd honkit_template
-# mkdir -p generated/honkit/node_modules
+
 mkdir -p generated/books
+mkdir -p generated/honkit
 
-cd books/honkit_demo/
+cd generated/honkit
+
+# install js plugin: common and gitbook/honkit
+npm install -s prismjs lodash 
 npm install -s gitbook-plugin-anchors gitbook-plugin-callouts gitbook-plugin-chapter-fold gitbook-plugin-copy-code-button gitbook-plugin-disqus gitbook-plugin-donate gitbook-plugin-expandable-menu gitbook-plugin-folding-chapters-2 gitbook-plugin-github-buttons gitbook-plugin-prism gitbook-plugin-prism-themes gitbook-plugin-search-plus gitbook-plugin-sharing-plus gitbook-plugin-sitemap-general gitbook-plugin-splitter-nosessionbutcookie gitbook-plugin-tbfed-pagefooter gitbook-plugin-theme-comscore gitbook-plugin-toggle-chapters gitbook-plugin-toolbar-button
-
 ```
 
-* 关于`node_modules`
-  * Update: 20220611, current HonKit has bug, if use soft link node_modules, will cause Reload deadlock, so temp no use soft link node_modules
-  * Update: 20221020, has fix HonKit bug, now can use soft link node_modules
-
-先去修复Honkit的bug：
-
-`node_modules/honkit/lib/cli/watch.js`
-从：
-
-`ignored: "_book/**",`
-
-改为：
-
-`ignored: ["_book/**", "node_modules/**"],`
-
-修改后，相关部分完整代码：
-
-```js
-    const watcher = chokidar_1.default.watch(toWatch, {
-        cwd: dir,
-        // ignored: "_book/**",
-        ignored: ["_book/**", "node_modules/**"],
-        ignoreInitial: true,
-    });
-```
-
-接着把`node_modules`移动到通用目录：
+回到book：
 
 ```bash
-mv node_modules ../../generated/honkit
-ln -s ../../generated/honkit/node_modules node_modules
+cd ../../books/honkit_demo
 ```
 
-然后即可正常调试：
+然后即可正常调试单个book：
 
 ```bash
 # make init
@@ -169,51 +145,63 @@ make deploy
 
 ```bash
 ✗ npx honkit --version
-3.7.1
+4.0.7
 ```
 
 ### 下载模板源码
 
 `git clone https://github.com/crifan/honkit_template.git`
 
-
 ------
 
-TODO: 抽空更新下面的内容
+### 首次初始化
 
-### 初始化安装`Gitbook`插件
+安装Honkit插件：
+
+```bash
+cd honkit_template
+
+mkdir -p generated/books
+mkdir -p generated/honkit
+
+cd generated/honkit
+
+# install js plugin: common and gitbook/honkit
+npm install -s prismjs lodash 
+npm install -s gitbook-plugin-anchors gitbook-plugin-callouts gitbook-plugin-chapter-fold gitbook-plugin-copy-code-button gitbook-plugin-disqus gitbook-plugin-donate gitbook-plugin-expandable-menu gitbook-plugin-folding-chapters-2 gitbook-plugin-github-buttons gitbook-plugin-prism gitbook-plugin-prism-themes gitbook-plugin-search-plus gitbook-plugin-sharing-plus gitbook-plugin-sitemap-general gitbook-plugin-splitter-nosessionbutcookie gitbook-plugin-tbfed-pagefooter gitbook-plugin-theme-comscore gitbook-plugin-toggle-chapters gitbook-plugin-toolbar-button
+```
+
+安装后，`generated/honkit/node_modules`中有`Honkit`和对应的各种插件：
+
+![honkit_installed_plugin_node_modules](img/honkit_installed_plugin_node_modules.jpg)
+
+### 调试+编写`book`源码
+
+回到单个book内：
 
 ```bash
 cd honkit_template/books/honkit_demo/
-rm -rf node_modules/
-make init
 ```
 
-**作用**：内部会先`sync_content`同步和生成各种所需文件，以及再`gitbook install`去安装插件到`book`下的`node_modules`文件夹中。
-
-插件安装后效果如图：
-
-![Gitbook的install插件到node_modules](img/honkit_installed_plugin_node_modules.png)
-
-### 调试+编写`book`源码
+去本地调试：
 
 ```bash
 make debug
 ```
 
-**作用**：内部会调用`gitbook serve`去调试，把调试生成的文件都放到`generated/books/gitbook_demo/debug`文件夹中。
+**作用**：内部会调用`npx honkit serve`去调试，把调试生成的文件都放到`generated/books/honkit_demo/debug`文件夹中。
 
 然后就可以去用浏览器去打开：
 
 [http://localhost:4000/](http://localhost:4000/)
 
-看到此`gitbook`模板demo的效果了：
+看到此`honkit`模板demo的效果了：
 
-![Gitbook的debug的localhost效果](img/honkit_debug_localhost.png)
+![honkit的debug的localhost效果](img/honkit_debug_localhost.jpg)
 
-![Gitbook的各种hint/callout提示的效果](img/honkit_various_hint_callout_effect.png)
+![honkit的各种hint/callout提示的效果](img/honkit_various_hint_callout_effect.jpg)
 
-然后就可以去用编辑器，比如[VSCode](https://book.crifan.org/books/best_editor_vscode/website/)，去编辑和更新自己的`markdown`=`md`源码了，然后gitbook会自动检测到文件变动，刷新页面。
+然后就可以去用编辑器，比如[VSCode](https://book.crifan.org/books/best_editor_vscode/website/)，去编辑和更新自己的`markdown`=`md`源码了，然后honkit会自动检测到文件变动，热更新刷新页面。
 
 ### 生成静态文件：`html`,`pdf`,`epub`,`mobi`
 
@@ -228,13 +216,13 @@ make all
 * `npx honkit epub`：生成`epub`文件
 * `npx honkit mobi`：生成`mobi`文件
 
-生成的文件都保存到了`generated/books/gitbook_demo/release/gitbook_demo`文件夹中：
+生成的文件都保存到了`generated/books/honkit_demo/release/honkit_demo`文件夹中：
 
-![gitbook生成各种文件到release文件夹中](img/honkit_generated_all_files_to_ouput_folder.png)
+![honkit生成各种文件到release文件夹中](img/honkit_generated_all_files_to_ouput_folder.jpg)
 
 ### [可选]提交`commit`+部署`deploy`
 
-上述步骤中已经得到相关文件了，如果只是想要简单粗暴的发布到自己网站上，只需要拷贝和粘贴即可。
+上述步骤中已经得到相关文件了，如果只想简单直接的发布到自己网站上，只需要拷贝和粘贴即可。
 
 如果同时希望把此繁琐的人工操作自动化，则可以使用此处的工具：
 
@@ -250,7 +238,7 @@ make deploy
 
 #### 对于`upload`
 
-当然，如果自己没有`upload`的需求，则可以修改`common/gitbook_makefile.mk`中的`deploy`的依赖：
+当然，如果自己没有`upload`的需求，则可以修改`common/honkit_makefile.mk`中的`deploy`的依赖：
 
 ```make
 deploy: upload commit
@@ -266,7 +254,7 @@ deploy: commit
 
 #### 对于`commit`
 
-对于：`common/gitbook_makefile.mk`
+对于：`common/honkit_makefile.mk`
 
 如果自己没有需要commit的github.io的代码，则可以保持默认的：
 
@@ -315,9 +303,9 @@ DEPLOY_SERVER_PATH=/data/wwwroot/book.crifan.org/books
 xxxxxx
 ```
 
-## 新建gitbook
+## 新建honkit
 
-下面通过实际例子去介绍如何新建一个gitbook：
+下面通过实际例子去介绍如何新建一个honkit：
 
 切换到`books`目录下，去下载代码：
 
@@ -387,19 +375,20 @@ make deploy
 
 ## 其他说明
 
-### 备份的`node_modules_companyMac.7z`
+### 备份的`honkit_node_modules.7z`
 
-新增了`common/backup/node_modules_companyMac.7z`，是公司Mac中的`generated/honkit/node_modules`的压缩包
+新增了`common/config/common/backup/honkit_node_modules.7z`，是本地Mac中已安装好的`generated/honkit/`的压缩包，包括`node_modules`和`package.json`
 
-作用：万一，自己的或别人node_modules的环境被破坏了，或者想要换电脑但快速搭建`HonKit`环境，则可以快速的直接用此`node_modules_companyMac.7z`，解压后移动到`generated/honkit/node_modules`，即可。
+作用：万一，自己的或别人node_modules的环境被破坏了，或者想要换电脑但快速搭建`HonKit`环境，则可以快速的直接用此`honkit_node_modules.7z`，解压后移动到`generated/honkit`，即可。
 
 ### prism的alias支持
 
-honkit（即gitbook）的prism插件默认不支持alias
+honkit的prism插件默认不支持alias
 
 -> 会报错：
 
 ```bash
+Failed to load prism syntax: objc
 Error: Cannot find module 'prismjs/components/prism-objc.js'
 ...
   code: 'MODULE_NOT_FOUND',
@@ -488,39 +477,13 @@ BookRoot_github = "crifan.github.io"
 * generate md
   * `python ../../common/tools/generate_md_from_summary.py -e . -m summary`
 
-### 指定debug的端口用于同时debug多个book
-
-已更新makefile支持在
-
-```bash
-make debug
-```
-
-时指定端口，即：
-
-* `make debug` == `make debug GITBOOK_DEBUG_PORT=4000 GITBOOK_DEBUG_LRPORT=35729`
-
-对应内部的命令参数：
-
-```bash
-gitbook serve --port 4000 --lrport 35729 ...
-```
-
-> 注：`lrport`=`live reload port`=改动文件后自动重新加载
-
-同时可以（在另外一个终端中）启动另外一个debug，指定特定的端口，比如：
-
-* `make debug GITBOOK_DEBUG_PORT=4001 GITBOOK_DEBUG_LRPORT=35730`
-
-即可同时编辑多个`gitbook`，而不会出现端口相同而冲突。
-
 ### 给rsync添加代理以提速
 
 此处用`rsync`同步上传文件到自己的github.io仓库中或自己的网站中时，有时候速度很慢
 
 为了提速，可以考虑加代理。
 
-此处`common/gitbook_makefile.mk`中默认关闭了代理：
+此处`common/honkit_makefile.mk`中默认关闭了代理：
 
 ```makefile
 ENABLE_RSYNC_PROXY = false
@@ -537,96 +500,20 @@ PROXY_SOCK5 = 127.0.0.1:51837
 RSYNC_PROXY = -e "ssh -o 'ProxyCommand nc -X 5 -x $(PROXY_SOCK5) %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5
 ```
 
-### 提取共用的node_modules
-
-如果你像我一样，不希望每个book都（通过`gitbook install`)创建自己的node_modules，以便于，用同一套gitbook的模块配置，用于多个book。
-
-在第一次某个book的`make init`后（内部会调用`gitbook install`），会生成`node_modules`目录
-
-则可以把`node_modules`移动到`generated/honkit`：
-
-`mv node_modules ../../generated/honkit/node_modules`
-
-然后再去当前book中加上软链接：
-
-`ln -s ../../generated/honkit/node_modules node_modules`
-
-以后新增book时，只需要重新创建对应软链接即可。
-
 ### 想要部署时忽略多个book中的某个book
 
 如果你和我一样有个（实际上很少人会有这种）特殊需求，有多个book，想要在`make deploy`时，忽略某个book，则可以去：
 
-和`GitbookCommon.mk`同级目录中新建`deploy_ignore_book_list.txt`，然后加上要忽略部署上传的book，比如：
+编辑`common/config/deploy/deploy_ignore_book_list.txt`，然后加上要忽略部署上传的book，比如：
 
 ```bash
 scientific_network_summary
 
 ```
 
-### Google Adsense
-
-#### 支持Google Adsense自动广告
-
-在`book.json`中包含了插件`google-adsense`的话，会在`make init`（内部调用`gitbook init`）初始化安装对应插件到：
-
-`node_modules/gitbook-plugin-google-adsense/`
-
-如果想要支持 自动广告，则需要把其中的：
-
-`book/plugin.js`
-
-改为：
-
-```js
-require(["gitbook"], function(gitbook) {
-    gitbook.events.bind("start", function(e, pluginConfig) {
-        // console.log("=================== google-adsense start: pluginConfig=%o", pluginConfig);
-        configs = pluginConfig['google-adsense'].ads;
-        // console.log("configs=%o", configs);
-        firstConfig = configs[0]
-        firstClient = firstConfig.client
-        // console.log("firstClient=%o", firstClient);
-
-        // init script
-        var adScript = document.createElement('script');
-        // adScript.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-        adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-        adScript.setAttribute('async', true);
-        adScript.setAttribute('data-ad-client', firstClient); // add for Google Adsense Auto Ads
-        // console.log("adScript=%o", adScript);
-        document.body.appendChild(adScript);
-    });
-});
-```
-
-即可。
-
-#### 把Google Adsense相关配置换成你自己的
-
-在发布之前，记得把其中的google adsense方面的配置，换成你自己的。
-
-涉及到的Google Adsense相关配置有：
-
-* `common/config/common/common_book.json`
-  ```json
-      "google-adsense": {
-        "ads": [
-          {
-              "client": "ca-pub-6626240105039250"
-          }
-        ]
-      },
-      ...
-      "ga": {
-        "token": "UA-28297199-1"
-      },
-  ```
-  * 把 `ca-pub-6626240105039250`和`UA-28297199-1`换成你自己的即可
-
 ### 此处的`book.json`和`REAMDME.md`是用脚本生成的
 
-此处的`gitbook_demo`的：
+此处的`honkit_demo`的：
 
 * `gibtook`的`book.json`
 * `README.md`
@@ -671,16 +558,25 @@ require(["gitbook"], function(gitbook) {
 对于`Makefile`如果还有其他疑问，可以通过`make help`去查看说明：
 
 ```bash
-➜  gitbook_demo git:(master) ✗ make help
+➜  honkit_demo git:(main) ✗ make help
+CURRENT_USER=crifan
+NOT found  in IGNORE_FILE_CONTENT=
+---Current Config---
+ENABLE_COMMIT_GITHUB_IO=true
+ENABLE_UPDATE_GITHUB_IO_README=true
+ENABLE_DEPLOY_SERVER=true
+ENABLE_RSYNC_PROXY=true
+RSYNC_PROXY=-e "ssh -o 'ProxyCommand nc -X 5 -x 127.0.0.1:51837 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
+RSYNC_PARAMS=-e "ssh -o 'ProxyCommand nc -X 5 -x 127.0.0.1:51837 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5" -avzh --progress --stats --delete --force
 --------------------------------------------------------------------------------
 Author  : crifan.org
-Version : 20210115
-Function: Auto use gitbook to generated files: website/pdf/epub/mobi; upload to remote server; commit to your github.io repository
+Version : 20221027
+Function: Auto use Honkit to generated files: website/pdf/epub/mobi; upload to remote server; commit to your github.io repository
                 Run 'make help' to see usage
+                Latest version: https://github.com/crifan/honkit_template
 --------------------------------------------------------------------------------
-CURRENT_DIR=/Users/crifan/dev/dev_root/gitbook/GitbookTemplate/gitbook_template/books/gitbook_demo
-BOOK_NAME=gitbook_demo
-NOT found gitbook_demo in IGNORE_FILE_CONTENT=
+CURRENT_DIR=/Users/crifan/dev/dev_root/ebook/honkit/honkit_template/books/honkit_demo
+BOOK_NAME=honkit_demo
 
 Usage:
   make <target>
@@ -691,9 +587,9 @@ Targets:
   debug_include             Debug include file
   debug_dir                 Print current directory related info
   debug_python              Debug for makefile call python
-  create_folder_debug       Create folder for gitbook local debug
-  create_folder_release     Create folder for gitbook release: website+pdf+epub+mobi
-  create_folder_website     Create folder for gitbook website
+  create_folder_debug       Create folder for honkit local debug
+  create_folder_release     Create folder for honkit release: website+pdf+epub+mobi
+  create_folder_website     Create folder for honkit website
   create_folder_pdf         Create folder for pdf
   create_folder_epub        Create folder for epub
   create_folder_mobi        Create folder for mobi
@@ -702,12 +598,12 @@ Targets:
   clean_generated_readme_md Clean generated README.md file
   clean_gitignore           Clean copied .gitignore
   clean_generated_all       Clean generated all files
-  clean_debug               Clean gitbook debug
-  clean_website             Clean generated gitbook website whole folder
+  clean_debug               Clean honkit debug
+  clean_website             Clean generated honkit website whole folder
   clean_pdf                 Clean generated PDF file and whole folder
   clean_epub                Clean generated ePub file and whole folder
   clean_mobi                Clean generated Mobi file and whole folder
-  clean_release             Clean gitbook release
+  clean_release             Clean honkit release
   clean_all                 Clean all generated files
   generate_readme_md        Generate README.md from ../README_template.md and README_current.json
   copy_readme               copy README.md to ./src
@@ -715,10 +611,10 @@ Targets:
   sync_readme_to_book       Sync README_current.json to book_current.json
   generate_book_json        Generate book.json from ../book_common.json and book_current.json
   sync_content              sync content
-  install                   gitbook install plugins
-  init                      gitbook init to install plugins
-  debug                     Debug gitbook
-  website                   Generate gitbook website
+  pull                      git pull to update to latest code
+  status                    git status
+  debug                     Debug honkit
+  website                   Generate honkit website
   pdf                       Generate PDF file
   epub                      Generate ePub file
   mobi                      Generate Mobi file

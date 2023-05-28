@@ -2,7 +2,7 @@
 
 # TODO: update makefile for all honkit functions
 
-# Latest: https://github.com/crifan/gitbook_template/blob/master/common/gitbook_makefile.mk
+# Latest: https://github.com/crifan/honkit_template/blob/main/common/honkit_makefile.mk
 
 ################################################################################
 # System Value
@@ -36,7 +36,7 @@ RSYNC_PARAMS =
 ifeq ($(CURRENT_USER), crifan)
 ENABLE_COMMIT_GITHUB_IO = true
 
-# if need commit, enable and change to yours path
+# change to your github.io path if necessary before you do git commit
 GITHUB_IO_PATH=/Users/crifan/dev/dev_root/github/github.io/crifan.github.io
 
 ENABLE_UPDATE_GITHUB_IO_README = true
@@ -47,7 +47,7 @@ ENABLE_COMMIT_GITHUB_IO = true
 
 ENABLE_UPDATE_GITHUB_IO_README = true
 
-# if need commit, enable and change to yours path
+# change to your github.io path if necessary before you do git commit
 GITHUB_IO_PATH=/Users/limao/dev/crifan/crifan.github.io
 
 ENABLE_RSYNC_PROXY = true
@@ -63,7 +63,7 @@ ifneq ($(RSYNC_PROXY), )
 RSYNC_PARAMS = $(RSYNC_PROXY) -avzh --progress --stats --delete --force
 endif
 
-# Gitbook Debug Port and LiveReload Port
+# Honkit Debug Port and LiveReload Port
 HONKIT_DEBUG_PORT ?= 4000
 HONKIT_DEBUG_LRPORT ?= 35729
 
@@ -71,11 +71,11 @@ HONKIT_DEBUG_LRPORT ?= 35729
 
 ifeq ($(ENABLE_DEPLOY_SERVER), true)
 # if need upload/deploy, update content of these file
-DEPLOY_SERVER_PASSWORD_FILE=$(GITBOOK_ROOT_COMMON)/config/deploy/deploy_server_password.txt
-DEPLOY_IGNORE_FILE=$(GITBOOK_ROOT_COMMON)/config/deploy/deploy_ignore_book_list.txt
+DEPLOY_SERVER_PASSWORD_FILE=$(HONKIT_ROOT_COMMON)/config/deploy/deploy_server_password.txt
+DEPLOY_IGNORE_FILE=$(HONKIT_ROOT_COMMON)/config/deploy/deploy_ignore_book_list.txt
 endif
 
-COMMON_GITIGNORE_FILE=$(GITBOOK_ROOT_COMMON)/config/common/common_gitignore
+COMMON_GITIGNORE_FILE=$(HONKIT_ROOT_COMMON)/config/common/common_gitignore
 
 ifeq ($(ENABLE_DEPLOY_SERVER), true)
 
@@ -111,10 +111,10 @@ $(info RSYNC_PARAMS=$(RSYNC_PARAMS))
 # Global defines
 ################################################################################
 
-GENERATE_BOOK_JSON_FILE=$(GITBOOK_ROOT_COMMON)/tools/generate_book_json.py
-GENERATE_README_MD_FILE=$(GITBOOK_ROOT_COMMON)/tools/generate_readme_md.py
-SYNC_README_JSON_TO_BOOK_JSON_FILE=$(GITBOOK_ROOT_COMMON)/tools/sync_ReadmeCurrent_to_bookCurrent.py
-UPDATE_GITHUB_IO_README_FILE=$(GITBOOK_ROOT_COMMON)/tools/update_crifan_github_io_readme.py
+GENERATE_BOOK_JSON_FILE=$(HONKIT_ROOT_COMMON)/tools/generate_book_json.py
+GENERATE_README_MD_FILE=$(HONKIT_ROOT_COMMON)/tools/generate_readme_md.py
+SYNC_README_JSON_TO_BOOK_JSON_FILE=$(HONKIT_ROOT_COMMON)/tools/sync_ReadmeCurrent_to_bookCurrent.py
+UPDATE_GITHUB_IO_README_FILE=$(HONKIT_ROOT_COMMON)/tools/update_crifan_github_io_readme.py
 
 # COLORS
 GREEN  := $(shell tput -Txterm setaf 2)
@@ -157,10 +157,10 @@ $(eval MAKEFILE_DIR_NOSLASH = $(MAKEFILE_DIR_PATSUBST))
 $(eval CURRENT_DIR_WITH_SLASH = $(MAKEFILE_DIR))
 $(eval CURRENT_DIR = $(MAKEFILE_DIR_NOSLASH))
 $(eval CURRENT_DIR_NAME := $(notdir $(MAKEFILE_DIR_PATSUBST)))
-$(eval GITBOOK_ROOT := $(abspath $(CURRENT_DIR)/../..))
-$(eval GITBOOK_ROOT_BOOKS := $(abspath $(GITBOOK_ROOT)/books))
-$(eval GITBOOK_ROOT_COMMON := $(abspath $(GITBOOK_ROOT)/common))
-$(eval GITBOOK_ROOT_GENERATED := $(abspath $(GITBOOK_ROOT)/generated))
+$(eval HONKIT_ROOT := $(abspath $(CURRENT_DIR)/../..))
+$(eval HONKIT_ROOT_BOOKS := $(abspath $(HONKIT_ROOT)/books))
+$(eval HONKIT_ROOT_COMMON := $(abspath $(HONKIT_ROOT)/common))
+$(eval HONKIT_ROOT_GENERATED := $(abspath $(HONKIT_ROOT)/generated))
 
 $(info CURRENT_DIR=$(CURRENT_DIR))
 endef
@@ -173,7 +173,7 @@ $(info BOOK_NAME=$(BOOK_NAME))
 
 RELEASE_FOLDER_NAME = release
 DEBUG_FOLDER_NAME = debug
-CURRENT_BOOK_GENERATED=$(GITBOOK_ROOT)/generated/books/$(BOOK_NAME)
+CURRENT_BOOK_GENERATED=$(HONKIT_ROOT)/generated/books/$(BOOK_NAME)
 RELEASE_PATH = $(CURRENT_BOOK_GENERATED)/$(RELEASE_FOLDER_NAME)/$(BOOK_NAME)
 DEBUG_PATH = $(CURRENT_BOOK_GENERATED)/$(DEBUG_FOLDER_NAME)
 
@@ -223,10 +223,10 @@ debug_dir:
 	@echo CURRENT_DIR=$(CURRENT_DIR)
 	@echo CURRENT_DIR_NAME=$(CURRENT_DIR_NAME)
 	@echo BOOK_NAME=$(BOOK_NAME)
-	@echo GITBOOK_ROOT=$(GITBOOK_ROOT)
-	@echo GITBOOK_ROOT_BOOKS=$(GITBOOK_ROOT_BOOKS)
-	@echo GITBOOK_ROOT_COMMON=$(GITBOOK_ROOT_COMMON)
-	@echo GITBOOK_ROOT_GENERATED=$(GITBOOK_ROOT_GENERATED)
+	@echo HONKIT_ROOT=$(HONKIT_ROOT)
+	@echo HONKIT_ROOT_BOOKS=$(HONKIT_ROOT_BOOKS)
+	@echo HONKIT_ROOT_COMMON=$(HONKIT_ROOT_COMMON)
+	@echo HONKIT_ROOT_GENERATED=$(HONKIT_ROOT_GENERATED)
 	@echo RELEASE_PATH=$(RELEASE_PATH)
 	@echo WEBSITE_PATH=$(WEBSITE_PATH)
 	@echo WEBSITE_FULLNAME=$(WEBSITE_FULLNAME)
@@ -241,15 +241,15 @@ debug_python:
 # Create folder
 ################################################################################
 
-## Create folder for gitbook local debug
+## Create folder for honkit local debug
 create_folder_debug: 
 	mkdir -p $(DEBUG_PATH)
 
-## Create folder for gitbook release: website+pdf+epub+mobi
+## Create folder for honkit release: website+pdf+epub+mobi
 create_folder_release: 
 	mkdir -p $(RELEASE_PATH)
 
-## Create folder for gitbook website
+## Create folder for honkit website
 create_folder_website: 
 	mkdir -p $(WEBSITE_PATH)
 
@@ -291,11 +291,11 @@ clean_generated_all: clean_gitignore clean_generated_readme_md clean_generated_b
 
 # ------------------------------------------------
 
-## Clean gitbook debug
+## Clean honkit debug
 clean_debug:
 	-rm -rf $(DEBUG_PATH)
 
-## Clean generated gitbook website whole folder
+## Clean generated honkit website whole folder
 clean_website:
 	-rm -rf $(WEBSITE_PATH)
 
@@ -311,7 +311,7 @@ clean_epub:
 clean_mobi:
 	-rm -rf $(MOBI_PATH)
 
-## Clean gitbook release
+## Clean honkit release
 clean_release: clean_website clean_pdf clean_epub clean_mobi
 	-rm -rf $(RELEASE_PATH)
 
@@ -319,7 +319,7 @@ clean_release: clean_website clean_pdf clean_epub clean_mobi
 clean_all: clean_generated_all clean_debug clean_release
 
 ################################################################################
-# Gitbook Init / Preparation
+# Honkit Init / Preparation
 ################################################################################
 
 ## Generate README.md from ../README_template.md and README_current.json
@@ -346,13 +346,6 @@ generate_book_json: clean_generated_book_json
 sync_content: sync_readme_to_book generate_book_json generate_readme_md copy_readme copy_gitignore
 	@echo Complete sync content
 
-# TODO: write python to install all plugins inside books/honkit_demo/book.json plugins, using: npm install -S gitbook-plugin-xxx
-# ## gitbook install plugins
-# install:
-# 	gitbook install
-
-## gitbook init to install plugins
-# init: sync_content install
 init: sync_content
 	@echo Compelete init all things
 
@@ -380,8 +373,8 @@ HONKIT_COMMON_FLAGS=
 HONKIT_COMMON_DEBUG_FLAGS= ${HONKIT_COMMON_FLAGS}
 HONKIT_COMMON_RELEASE_FLAGS= ${HONKIT_COMMON_FLAGS} --timing
 
-#	 gitbook --port $(HONKIT_DEBUG_PORT) --lrport $(HONKIT_DEBUG_LRPORT) serve $(CURRENT_DIR) $(DEBUG_PATH) $(HONKIT_COMMON_FLAGS)
-## Debug gitbook
+#	 honkit --port $(HONKIT_DEBUG_PORT) --lrport $(HONKIT_DEBUG_LRPORT) serve $(CURRENT_DIR) $(DEBUG_PATH) $(HONKIT_COMMON_FLAGS)
+## Debug honkit
 debug: sync_content clean_debug create_folder_debug
 	npx honkit serve $(HONKIT_COMMON_DEBUG_FLAGS) $(CURRENT_DIR) $(DEBUG_PATH)
 

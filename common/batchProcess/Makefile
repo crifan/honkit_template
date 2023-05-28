@@ -1,12 +1,12 @@
-# Function: Batch make for all gitbooks
+# Function: Batch make for all honkit books
 # Author: Crifan Li
-# Update: 20210916
-# Latest: https://github.com/crifan/gitbook_template/blob/master/common/batchProcess/Makefile
+# Update: 20230528
+# Latest: https://github.com/crifan/honkit_template/blob/main/common/batchProcess/Makefile
 # 
 # [Note]
-# 1. this makefile should be located common batchProcess folder:
-# 	/Users/crifan/dev/dev_root/gitbook/GitbookTemplate/gitbook_template/common/batchProcess
-# 	should goto above folder to run:
+# 1. this makefile should be located common batchProcess folder, such as:
+# 	/Users/crifan/dev/dev_root/ebook/honkit/honkit_template/common/batchProcess/Makefile
+# 	should goto parent folder (batchProcess) to run:
 # 	make xxx
 
 BATCH_PROCESS_IGNORE_FILE=batch_process_ignore_books.txt
@@ -48,7 +48,7 @@ $(info ----------------------------------------)
 # echo `pwd`; \
 # echo $$each_item; \
 
-# Batch make for all gitbooks
+# Batch make for all honkit books
 help debug_nothing debug_dir init sync_content pull status clean_all website pdf epub mobi all upload commit deploy:
 	@echo "Current path="`pwd`;
 	@echo "LS_OUTPUT="$(TO_PROCESS_BOOKS);
