@@ -1,7 +1,5 @@
 -include ../../common/config/deploy/deploy_server_info.mk
 
-# TODO: update makefile for all honkit functions
-
 # Latest: https://github.com/crifan/honkit_template/blob/main/common/honkit_makefile.mk
 
 ################################################################################
