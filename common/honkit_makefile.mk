@@ -48,6 +48,7 @@ RSYNC_BIN = /usr/local/Cellar/rsync/3.2.7_1/bin/rsync
 ################################################################################
 
 ifeq ($(CURRENT_USER), crifan)
+ENABLE_DEPLOY_SERVER = true
 ENABLE_COMMIT_GITHUB_IO = true
 
 # change to your github.io path if necessary before you do git commit
@@ -60,6 +61,7 @@ ENABLE_UPDATE_GITHUB_IO_README = true
 ENABLE_RSYNC_PROXY = false
 
 else ifeq ($(CURRENT_USER), limao)
+ENABLE_DEPLOY_SERVER = true
 ENABLE_COMMIT_GITHUB_IO = true
 
 ENABLE_UPDATE_GITHUB_IO_README = true
