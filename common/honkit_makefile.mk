@@ -27,7 +27,21 @@ ENABLE_RSYNC_PROXY = false
 
 # default: rsync not use any proxy
 RSYNC_PROXY = 
-RSYNC_PARAMS = 
+# RSYNC_PARAMS = 
+RSYNC_PARAMS = -avzh --progress --stats --delete --force
+
+# for M1/M2 Mac, many binary can not use, so repalce it with old ones
+# NC_BIN = nc
+NC_BIN = /Users/crifan/dev/dev_tool/oldMac/nc_oldMac
+
+SSH_BIN = ssh
+# SSH_BIN = /Users/crifan/dev/dev_tool/oldMac/ssh_oldMac
+
+# RSYNC_BIN = rsync
+# RSYNC_BIN = /Users/crifan/dev/dev_tool/oldMac/rsync_oldMac
+# RSYNC_BIN = /usr/bin/rsync
+# RSYNC_BIN = /Users/crifan/dev/dev_tool/oldMac/rsync_oldMac_builtin
+RSYNC_BIN = /usr/local/Cellar/rsync/3.2.7_1/bin/rsync
 
 ################################################################################
 # Generated Config
@@ -41,7 +55,10 @@ GITHUB_IO_PATH=/Users/crifan/dev/dev_root/github/github.io/crifan.github.io
 
 ENABLE_UPDATE_GITHUB_IO_README = true
 
-ENABLE_RSYNC_PROXY = true
+# ENABLE_RSYNC_PROXY = true
+# for compatible with M2 Mac
+ENABLE_RSYNC_PROXY = false
+
 else ifeq ($(CURRENT_USER), limao)
 ENABLE_COMMIT_GITHUB_IO = true
 
@@ -55,12 +72,21 @@ endif
 
 ifeq ($(ENABLE_RSYNC_PROXY), true)
 # for rsync use sock5 proxy
-PROXY_SOCK5 = 127.0.0.1:51837
-RSYNC_PROXY = -e "ssh -o 'ProxyCommand nc -X 5 -x $(PROXY_SOCK5) %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
+PROXY_SOCK5 = 127.0.0.1:58591
+# PROXY_SOCK5 = localhost:58591
+# RSYNC_PROXY = -e "ssh -o 'ProxyCommand nc -X 5 -x $(PROXY_SOCK5) %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
+# RSYNC_PROXY = -e "ssh -o 'ProxyCommand /Users/crifan/dev/dev_tool/oldMac/nc_oldMac -X 5 -x $(PROXY_SOCK5) %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
+# RSYNC_PROXY = -e "/Users/crifan/dev/dev_tool/oldMac/ssh_oldMac -o 'ProxyCommand /Users/crifan/dev/dev_tool/oldMac/nc_oldMac -X 5 -x $(PROXY_SOCK5) %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
+RSYNC_PROXY = -e "$(SSH_BIN) -o 'ProxyCommand $(NC_BIN) -X 5 -x $(PROXY_SOCK5) %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
+# RSYNC_PROXY = -e 'ssh -o ProxyCommand="nc -X 5 -x $(PROXY_SOCK5) %h %p" -o ServerAliveInterval=30 -o ServerAliveCountMax=5'
+# RSYNC_PROXY = -e 'ssh -o ProxyCommand="nc -v -X 4 -x $(PROXY_SOCK5) %h %p" -o ServerAliveInterval=30 -o ServerAliveCountMax=5'
+# RSYNC_PROXY = -e 'ssh -o ProxyCommand="/opt/homebrew/bin/connect -S $(PROXY_SOCK5) %h %p" -o ServerAliveInterval=30 -o ServerAliveCountMax=5'
 endif
 
 ifneq ($(RSYNC_PROXY), )
-RSYNC_PARAMS = $(RSYNC_PROXY) -avzh --progress --stats --delete --force
+# RSYNC_PARAMS = $(RSYNC_PROXY) -avzh --progress --stats --delete --force
+# RSYNC_PARAMS = $(RSYNC_PROXY) -v -avzh --progress --stats --delete --force
+RSYNC_PARAMS = $(RSYNC_PROXY) $(RSYNC_PARAMS)
 endif
 
 # Honkit Debug Port and LiveReload Port
@@ -136,7 +162,7 @@ endef
 # Output current makefile info
 ################################################################################
 Author=crifan.org
-Version=20221027
+Version=20230605
 Function=Auto use Honkit to generated files: website/pdf/epub/mobi; upload to remote server; commit to your github.io repository
 RunHelp = Run 'make help' to see usage
 GitRepo = Latest version: https://github.com/crifan/honkit_template
@@ -428,7 +454,7 @@ upload: all
 	@echo ================================================================================
 ifeq ($(ENABLE_DEPLOY_SERVER), true)
 	@echo Upload for $(BOOK_NAME)
-	sshpass -f $(DEPLOY_SERVER_PASSWORD_FILE) rsync $(RSYNC_PARAMS) $(RELEASE_PATH) $(DEPLOY_SERVER_USER)@$(DEPLOY_SERVER_IP):$(DEPLOY_SERVER_PATH)
+	sshpass -f $(DEPLOY_SERVER_PASSWORD_FILE) $(RSYNC_BIN) $(RSYNC_PARAMS) $(RELEASE_PATH) $(DEPLOY_SERVER_USER)@$(DEPLOY_SERVER_IP):$(DEPLOY_SERVER_PATH)
 else
 	@echo Disabled deploy $(BOOK_NAME) to server $(DEPLOY_SERVER_IP)
 endif
@@ -458,7 +484,7 @@ ifeq ($(ENABLE_COMMIT_GITHUB_IO), true)
 		echo "Ignored update README.md before commit $(BOOK_NAME) to github.io"; \
 	fi;
 	@echo copy current book all generated files to local github.io
-	rsync $(RSYNC_PARAMS) $(RELEASE_PATH) $(GITHUB_IO_PATH)
+	$(RSYNC_BIN) $(RSYNC_PARAMS) $(RELEASE_PATH) $(GITHUB_IO_PATH)
 	@echo push modifed content to github.io
 	cd $(GITHUB_IO_PATH) && \
 	pwd && \

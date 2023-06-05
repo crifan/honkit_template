@@ -496,7 +496,7 @@ ENABLE_RSYNC_PROXY = true
 
 ifeq ($(ENABLE_RSYNC_PROXY), true)
 # for rsync use sock5 proxy
-PROXY_SOCK5 = 127.0.0.1:51837
+PROXY_SOCK5 = 127.0.0.1:58591
 RSYNC_PROXY = -e "ssh -o 'ProxyCommand nc -X 5 -x $(PROXY_SOCK5) %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5
 ```
 
@@ -566,8 +566,8 @@ ENABLE_COMMIT_GITHUB_IO=true
 ENABLE_UPDATE_GITHUB_IO_README=true
 ENABLE_DEPLOY_SERVER=true
 ENABLE_RSYNC_PROXY=true
-RSYNC_PROXY=-e "ssh -o 'ProxyCommand nc -X 5 -x 127.0.0.1:51837 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
-RSYNC_PARAMS=-e "ssh -o 'ProxyCommand nc -X 5 -x 127.0.0.1:51837 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5" -avzh --progress --stats --delete --force
+RSYNC_PROXY=-e "ssh -o 'ProxyCommand nc -X 5 -x 127.0.0.1:58591 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
+RSYNC_PARAMS=-e "ssh -o 'ProxyCommand nc -X 5 -x 127.0.0.1:58591 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5" -avzh --progress --stats --delete --force
 --------------------------------------------------------------------------------
 Author  : crifan.org
 Version : 20221027
