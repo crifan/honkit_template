@@ -20,28 +20,15 @@ ENABLE_COMMIT_GITHUB_IO = false
 ENABLE_UPDATE_GITHUB_IO_README = false
 ENABLE_RSYNC_PROXY = false
 
-# ENABLE_DEPLOY_SERVER = true
-# ENABLE_COMMIT_GITHUB_IO = true
-# ENABLE_UPDATE_GITHUB_IO_README = true
-# ENABLE_RSYNC_PROXY = true
-
 # default: rsync not use any proxy
 RSYNC_PROXY = 
 # RSYNC_PARAMS = 
 RSYNC_PARAMS = -avzh --progress --stats --delete --force
 
-# for M1/M2 Mac, many binary can not use, so repalce it with old ones
-# NC_BIN = nc
-NC_BIN = /Users/crifan/dev/dev_tool/oldMac/nc_oldMac
-
+# change to your specific binary if necessary
+NC_BIN = nc
 SSH_BIN = ssh
-# SSH_BIN = /Users/crifan/dev/dev_tool/oldMac/ssh_oldMac
-
-# RSYNC_BIN = rsync
-# RSYNC_BIN = /Users/crifan/dev/dev_tool/oldMac/rsync_oldMac
-# RSYNC_BIN = /usr/bin/rsync
-# RSYNC_BIN = /Users/crifan/dev/dev_tool/oldMac/rsync_oldMac_builtin
-RSYNC_BIN = /usr/local/Cellar/rsync/3.2.7_1/bin/rsync
+RSYNC_BIN = rsync
 
 ################################################################################
 # Generated Config
@@ -59,6 +46,16 @@ ENABLE_UPDATE_GITHUB_IO_README = true
 # ENABLE_RSYNC_PROXY = true
 # for compatible with M2 Mac
 ENABLE_RSYNC_PROXY = false
+
+# for M1/M2 Mac, many binary can not use, so repalce it with old ones
+NC_BIN = /Users/crifan/dev/dev_tool/oldMac/nc_oldMac
+
+# SSH_BIN = /Users/crifan/dev/dev_tool/oldMac/ssh_oldMac
+
+# RSYNC_BIN = /usr/bin/rsync
+# RSYNC_BIN = /Users/crifan/dev/dev_tool/oldMac/rsync_oldMac
+# RSYNC_BIN = /Users/crifan/dev/dev_tool/oldMac/rsync_oldMac_builtin
+RSYNC_BIN = /usr/local/Cellar/rsync/3.2.7_1/bin/rsync
 
 else ifeq ($(CURRENT_USER), limao)
 ENABLE_DEPLOY_SERVER = true
