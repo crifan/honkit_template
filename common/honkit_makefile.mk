@@ -50,10 +50,10 @@ NC_BIN = /Users/crifan/dev/dev_tool/oldMac/nc_oldMac
 
 # SSH_BIN = /Users/crifan/dev/dev_tool/oldMac/ssh_oldMac
 
-# RSYNC_BIN = /usr/bin/rsync
+RSYNC_BIN = /usr/bin/rsync
 # RSYNC_BIN = /Users/crifan/dev/dev_tool/oldMac/rsync_oldMac
 # RSYNC_BIN = /Users/crifan/dev/dev_tool/oldMac/rsync_oldMac_builtin
-RSYNC_BIN = /usr/local/Cellar/rsync/3.2.7_1/bin/rsync
+# RSYNC_BIN = /usr/local/Cellar/rsync/3.2.7_1/bin/rsync
 
 else ifeq ($(CURRENT_USER), limao)
 ENABLE_DEPLOY_SERVER = true
@@ -83,7 +83,8 @@ endif
 ifneq ($(RSYNC_PROXY), )
 # RSYNC_PARAMS = $(RSYNC_PROXY) -avzh --progress --stats --delete --force
 # RSYNC_PARAMS = $(RSYNC_PROXY) -v -avzh --progress --stats --delete --force
-RSYNC_PARAMS = $(RSYNC_PROXY) $(RSYNC_PARAMS)
+# RSYNC_PARAMS = $(RSYNC_PROXY) $(RSYNC_PARAMS)
+RSYNC_PARAMS += $(RSYNC_PROXY)
 endif
 
 # Honkit Debug Port and LiveReload Port
@@ -159,7 +160,7 @@ endef
 # Output current makefile info
 ################################################################################
 Author=crifan.org
-Version=20230605
+Version=20240715
 Function=Auto use Honkit to generated files: website/pdf/epub/mobi; upload to remote server; commit to your github.io repository
 RunHelp = Run 'make help' to see usage
 GitRepo = Latest version: https://github.com/crifan/honkit_template
