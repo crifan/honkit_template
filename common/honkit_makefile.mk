@@ -34,8 +34,8 @@ RSYNC_BIN = rsync
 
 ifeq ($(CURRENT_USER), crifan)
 ENABLE_DEPLOY_SERVER = true
-# ENABLE_COMMIT_GITHUB_IO = true
-ENABLE_COMMIT_GITHUB_IO = false
+ENABLE_COMMIT_GITHUB_IO = true
+# ENABLE_COMMIT_GITHUB_IO = false
 
 # change to your github.io path if necessary before you do git commit
 GITHUB_IO_PATH=/Users/crifan/dev/dev_root/github/github.io/crifan.github.io
@@ -166,7 +166,7 @@ endef
 # Output current makefile info
 ################################################################################
 Author=crifan.org
-Version=20240924
+Version=20240927
 Function=Auto use Honkit to generated files: website/pdf/epub/mobi; upload to remote server; commit to your github.io repository
 RunHelp = Run 'make help' to see usage
 GitRepo = Latest version: https://github.com/crifan/honkit_template
@@ -489,6 +489,10 @@ ifeq ($(ENABLE_COMMIT_GITHUB_IO), true)
 	fi;
 	@echo copy current book all generated files to local github.io
 	$(RSYNC_BIN) $(RSYNC_PARAMS) $(RELEASE_PATH) $(GITHUB_IO_PATH)
+	@echo remove files pdf, mobi, epub to save space
+	rm -rf $(GITHUB_IO_PATH)/$(BOOK_NAME)/pdf
+	rm -rf $(GITHUB_IO_PATH)/$(BOOK_NAME)/mobi
+	rm -rf $(GITHUB_IO_PATH)/$(BOOK_NAME)/epub
 	@echo push modifed content to github.io
 	cd $(GITHUB_IO_PATH) && \
 	pwd && \
