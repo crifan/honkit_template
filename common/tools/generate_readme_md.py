@@ -94,7 +94,7 @@ def generateReadmeMd():
     gitRepoName = None
     for eachKey in readmeCurrentJson.keys():
         # print("eachKey=%s" % eachKey)
-        patternToReplace = "\{\{%s\}\}" % eachKey
+        patternToReplace = r"\{\{%s\}\}" % eachKey
         replacedStr = readmeCurrentJson[eachKey]
         # print("patternToReplace=%s -> replacedStr=%s" % (patternToReplace, replacedStr))
         readmeTemplateMdStr = re.sub(patternToReplace, replacedStr, readmeTemplateMdStr)
@@ -111,7 +111,7 @@ def generateReadmeMd():
         # * [科学上网相关知识总结 book.crifan.org](https://book.crifan.org/books/scientific_network_summary/website)
         # print("before: readmeTemplateMdStr=%s" % readmeTemplateMdStr)
         # onlineReadBookCrifanLinePattern = "^ \*.+?book\.crifan\.com\]\(.+?$"
-        onlineReadBookCrifanLinePattern = "^\*.+?book\.crifan\.com\]\(.+?$\n"
+        onlineReadBookCrifanLinePattern = r"^\*.+?book\.crifan\.com\]\(.+?$\n"
         # foundOnlineReadBookCrifanLine = re.search(onlineReadBookCrifanLinePattern, readmeTemplateMdStr, flags=re.M)
         # print("foundOnlineReadBookCrifanLine=%s" % foundOnlineReadBookCrifanLine)
         readmeTemplateMdStr = re.sub(onlineReadBookCrifanLinePattern, "", readmeTemplateMdStr, flags=re.M)
@@ -119,7 +119,7 @@ def generateReadmeMd():
 
         # (2) replace book path
         # book.crifan.org/books -> crifan.github.io
-        BookRootCrifanPattern = BookRoot_crifan.replace(".", "\.")
+        BookRootCrifanPattern = BookRoot_crifan.replace(".", r"\.")
         BookRootGithubPattern = BookRoot_github
         readmeTemplateMdStr = re.sub(BookRootCrifanPattern, BookRootGithubPattern, readmeTemplateMdStr)
         # print("after replaced book path: readmeTemplateMdStr=%s" % readmeTemplateMdStr)
