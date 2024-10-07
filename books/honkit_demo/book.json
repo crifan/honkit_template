@@ -1,6 +1,6 @@
 {
   "title": "HonKit演示",
-  "description": "crifan的HonKit模版，用于演示如何用HonKit创建一个自己的book电子书",
+  "description": "crifan的HonKit模版，用于演示如何用HonKit创建一个自己的book电子书。",
   "pluginsConfig": {
     "github-buttons": {
       "buttons": [
@@ -27,9 +27,6 @@
       "url": "https://book.crifan.org/books/honkit_demo/pdf/honkit_demo.pdf",
       "icon": "fa-file-pdf-o",
       "label": "下载PDF"
-    },
-    "callouts": {
-      "showTypeInHeader": false
     },
     "theme-default": {
       "showLevel": true
@@ -121,7 +118,7 @@
     "donate",
     "sitemap-general",
     "copy-code-button",
-    "callouts",
+    "blockquote-callout",
     "toolbar-button"
   ]
 }

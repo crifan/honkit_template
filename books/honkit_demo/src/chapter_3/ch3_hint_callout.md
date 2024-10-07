@@ -1,75 +1,98 @@
 # 提示`hint`和插图编号`callout`
 
-## `hint` == `callout` == 提示/警告/错误
+## `hint` == `callout` == 提示/警告/错误等特殊格式
 
-演示用插件`callouts`实现的`callout`==`hint`，即各种类型的提示/提醒的效果
+演示用插件`callout`（具体是[honkit-plugin-blockquote-callout](https://github.com/intptr-t/honkit-plugin-blockquote-callout))实现的`callout`==`hint`==`alert`，即各种类型的提示/提醒的效果
 
 语法：
 
 ```markdown
-> #### {type}:: Your Title
->
-> Content
+> [!{type}]
+> your text
 ```
 
 其中`{type}`是下面中的任意一种：
 
-* primary
-* success
-* danger
-* warning
-* info
-
-> 如果你用过`Bootstrap`就能看出来，其实这几种标题类型就是`Bootstrap`中的标题的类型
+* `NOTE`
+* `TIP`
+* `IMPORTANT`
+* `WARNING`
+* `CAUTION`
+* `UnsupportedAnnotation`
 
 效果如下的显示：
 
-### 提示=`tip`=`note`=`info`
+### 注解=`NOTE`
 
-> #### info::提醒类信息的标题
-> **提醒类信息**中的`内容`
+> [!NOTE]
+> **注解**类信息中的`内容`
 
-### 成功=`success`= ☑️
+### 提示=`TIP`
 
-> #### success:: 成功的标题
-> **成功**中的`内容`
+> [!TIP]
+> **提示**类信息中的`内容`
 
-### 警告=`warning`=⚠️
+### 重要=`IMPORTANT`
 
-> #### warning::警告的标题
-> **警告**中的`内容`
+> [!IMPORTANT]
+> **重要**类信息中的`内容`
 
-### 错误=`error`=`danger`=❌
+### 警告=`WARNING`
 
-> #### danger::错误的标题
-> **错误**中的`内容`
+> [!WARNING]
+> **警告**类信息中的`内容`
 
-### 其他几种(*不常见的*)类型
+### 告诫=`CAUTION`=error=错误
 
-> #### Tag::`Tag`的标题
-> **Tag**中的`内容`
+> [!CAUTION]
+> **告诫**类信息中的`内容`
 
----
+### 其他的、普通的block内容=`UnsupportedAnnotation`
 
-> #### Note::`Note`的标题
-> **Note**中的`内容`
+> [!UnsupportedAnnotation]
+> 
+> 没有此处特殊格式的、普通的、block块的内容
+> 
+> 注意，每行内容之间，要保留一行多余的`>`，才是普通的block内容的格式
 
----
+## 支持参数自定义
 
-> #### Comment::`Comment`的标题
-> **Comment**中的`内容`
+### 举例
 
----
+* `[!Warning|title:※注]`
+  * 把`Warning`的title标题的文字，换成：`※注`
 
-> #### Hint::`Hint`的标题
-> **Hint**中的`内容`
+代码：
 
----
+```markdown
+> [!Warning|title:※注]
+> 把标题"Warning"换成：`※注`
+```
 
-> #### Caution::`Caution`的标题
-> **Caution**中的`内容`
+效果：
 
----
+> [!Warning|title:※注]
+> 把标题"Warning"换成：`※注`
 
-> #### Quote::`Quote`的标题
-> **Caution**中的`内容`
+## 相关
+
+注意到另外一个（旧的gitbook的）插件：
+
+[fzankl/gitbook-plugin-flexible-alerts: GitBook plugin to convert blockquotes into beautiful and configurable alerts using preconfigured or own styles and alert types.](https://github.com/fzankl/gitbook-plugin-flexible-alerts)
+
+其语法格式和此处很类似
+
+且看到有额外的参数设置：
+
+| Key=关键字 | Allowed value=允许的值 |
+| --------- | --------------------- |
+| style | One of follwowing values: `callout`, `flat` |
+| label | Any text |
+| icon | A valid Font Awesome icon, e.g. `fa fa-info-circle` |
+| className | A name of a `CSS class` which specifies the look and feel |
+| labelVisibility | One of follwowing values: `visible` (default), `hidden` |
+| iconVisibility | One of follwowing values: `visible` (default), `hidden` |
+
+但是经过实际测试，此处并不支持这些参数。
+
+记录于此，仅供参考。

@@ -1,6 +1,6 @@
 {
   "title": "HonKit演示",
-  "description": "crifan的HonKit模版，用于演示如何用HonKit创建一个自己的book电子书",
+  "description": "crifan的HonKit模版，用于演示如何用HonKit创建一个自己的book电子书。",
   "pluginsConfig": {
     "github-buttons": {
       "buttons": [

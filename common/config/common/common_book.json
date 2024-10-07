@@ -29,13 +29,10 @@
     "donate",
     "sitemap-general",
     "copy-code-button",
-    "callouts",
+    "blockquote-callout",
     "toolbar-button"
   ],
   "pluginsConfig": {
-    "callouts": {
-      "showTypeInHeader": false
-    },
     "theme-default": {
       "showLevel": true
     },

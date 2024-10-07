@@ -1,7 +1,7 @@
 {
-  "latestVersion": "v1.1",
-  "lastUpdate": "20220629",
+  "latestVersion": "v2.0.0",
+  "lastUpdate": "20241007",
   "gitRepoName": "honkit_demo",
   "bookName": "HonKit演示",
-  "bookDescription": "crifan的HonKit模版，用于演示如何用HonKit创建一个自己的book电子书"
+  "bookDescription": "crifan的HonKit模版，用于演示如何用HonKit创建一个自己的book电子书。"
 }
