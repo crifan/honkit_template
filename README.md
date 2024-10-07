@@ -1,6 +1,6 @@
 # HonKit模板
 
-最后更新：`20230528`
+最后更新：`20241007`
 
 ## 项目代码仓库
 
@@ -8,7 +8,7 @@
 
 ## 项目作用
 
-1. 用于演示如何使用`crifan`的**HonKit模板**
+1. 用于演示如何使用`crifan`的[HonKit](https://github.com/honkit/honkit)模板
    * HonKit的模板，是基于之前的gitbook的模板更新而来的
      * [https://github.com/crifan/gitbook_template](https://github.com/crifan/gitbook_template)
 2. 别人和自己，可以基于此模板，快速方便的创建出自己的`Honkit`电子书
@@ -72,7 +72,7 @@
 
 而后来`Gitbook`官网已放弃维护`gitbook`，后续如继续使用，有无法正常更新和迁移困难的风险。
 
-经过寻找替代品，最后找到了：`Honkit`，所以继续制作此Honkit的模板，供自己和别人参考使用。
+经过寻找替代品，最后找到了：[Honkit](https://github.com/honkit/honkit)，所以继续制作此Honkit的模板，供自己和别人参考使用。
 
 ## 使用步骤
 
@@ -90,9 +90,13 @@ mkdir -p generated/honkit
 
 cd generated/honkit
 
+## install Honkit
+npm init --yes
+npm install honkit --save-dev
+
 # install js plugin: common and gitbook/honkit
 npm install -s prismjs lodash 
-npm install -s gitbook-plugin-anchors gitbook-plugin-callouts gitbook-plugin-chapter-fold gitbook-plugin-copy-code-button gitbook-plugin-disqus gitbook-plugin-donate gitbook-plugin-expandable-menu gitbook-plugin-folding-chapters-2 gitbook-plugin-github-buttons gitbook-plugin-prism gitbook-plugin-prism-themes gitbook-plugin-search-plus gitbook-plugin-sharing-plus gitbook-plugin-sitemap-general gitbook-plugin-splitter-nosessionbutcookie gitbook-plugin-tbfed-pagefooter gitbook-plugin-theme-comscore gitbook-plugin-toggle-chapters gitbook-plugin-toolbar-button
+npm install -s gitbook-plugin-anchors gitbook-plugin-callouts gitbook-plugin-chapter-fold gitbook-plugin-copy-code-button gitbook-plugin-disqus gitbook-plugin-donate gitbook-plugin-expandable-menu gitbook-plugin-folding-chapters-2 gitbook-plugin-github-buttons honkit-plugin-prism gitbook-plugin-prism-themes gitbook-plugin-search-plus gitbook-plugin-sharing-plus gitbook-plugin-sitemap-general gitbook-plugin-splitter-nosessionbutcookie gitbook-plugin-tbfed-pagefooter gitbook-plugin-theme-comscore gitbook-plugin-toggle-chapters gitbook-plugin-toolbar-button
 ```
 
 回到book：
@@ -145,7 +149,7 @@ make deploy
 
 ```bash
 ✗ npx honkit --version
-4.0.7
+6.0.0
 ```
 
 ### 下载模板源码
@@ -166,9 +170,13 @@ mkdir -p generated/honkit
 
 cd generated/honkit
 
+## install Honkit
+npm init --yes
+npm install honkit --save-dev
+
 # install js plugin: common and gitbook/honkit
 npm install -s prismjs lodash 
-npm install -s gitbook-plugin-anchors gitbook-plugin-callouts gitbook-plugin-chapter-fold gitbook-plugin-copy-code-button gitbook-plugin-disqus gitbook-plugin-donate gitbook-plugin-expandable-menu gitbook-plugin-folding-chapters-2 gitbook-plugin-github-buttons gitbook-plugin-prism gitbook-plugin-prism-themes gitbook-plugin-search-plus gitbook-plugin-sharing-plus gitbook-plugin-sitemap-general gitbook-plugin-splitter-nosessionbutcookie gitbook-plugin-tbfed-pagefooter gitbook-plugin-theme-comscore gitbook-plugin-toggle-chapters gitbook-plugin-toolbar-button
+npm install -s gitbook-plugin-anchors gitbook-plugin-callouts gitbook-plugin-chapter-fold gitbook-plugin-copy-code-button gitbook-plugin-disqus gitbook-plugin-donate gitbook-plugin-expandable-menu gitbook-plugin-folding-chapters-2 gitbook-plugin-github-buttons honkit-plugin-prism gitbook-plugin-prism-themes gitbook-plugin-search-plus gitbook-plugin-sharing-plus gitbook-plugin-sitemap-general gitbook-plugin-splitter-nosessionbutcookie gitbook-plugin-tbfed-pagefooter gitbook-plugin-theme-comscore gitbook-plugin-toggle-chapters gitbook-plugin-toolbar-button
 ```
 
 安装后，`generated/honkit/node_modules`中有`Honkit`和对应的各种插件：
@@ -406,7 +414,7 @@ Error: Cannot find module 'prismjs/components/prism-objc.js'
 
 变成：
 
-`generated/honkit/node_modules/gitbook-plugin-prism/index.js`
+`generated/honkit/node_modules/honkit-plugin-prism/index.js`
 
 ```js
 var MAP_LANGUAGES = {
@@ -496,8 +504,8 @@ ENABLE_RSYNC_PROXY = true
 
 ifeq ($(ENABLE_RSYNC_PROXY), true)
 # for rsync use sock5 proxy
-PROXY_SOCK5 = 127.0.0.1:58591
-RSYNC_PROXY = -e "ssh -o 'ProxyCommand nc -X 5 -x $(PROXY_SOCK5) %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5
+PROXY_SOCKS5 = 127.0.0.1:51837
+RSYNC_PROXY = -e "ssh -o 'ProxyCommand nc -X 5 -x $(PROXY_SOCKS5) %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5
 ```
 
 ### 想要部署时忽略多个book中的某个book
@@ -566,11 +574,11 @@ ENABLE_COMMIT_GITHUB_IO=true
 ENABLE_UPDATE_GITHUB_IO_README=true
 ENABLE_DEPLOY_SERVER=true
 ENABLE_RSYNC_PROXY=true
-RSYNC_PROXY=-e "ssh -o 'ProxyCommand nc -X 5 -x 127.0.0.1:58591 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
-RSYNC_PARAMS=-e "ssh -o 'ProxyCommand nc -X 5 -x 127.0.0.1:58591 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5" -avzh --progress --stats --delete --force
+RSYNC_PROXY=-e "ssh -o 'ProxyCommand /usr/bin/nc -X 5 -x 127.0.0.1:51837 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
+RSYNC_PARAMS=-avzh --progress --stats --delete --force -e "ssh -o 'ProxyCommand /usr/bin/nc -X 5 -x 127.0.0.1:51837 %h %p' -o ServerAliveInterval=30 -o ServerAliveCountMax=5"
 --------------------------------------------------------------------------------
 Author  : crifan.org
-Version : 20221027
+Version : 20240927
 Function: Auto use Honkit to generated files: website/pdf/epub/mobi; upload to remote server; commit to your github.io repository
                 Run 'make help' to see usage
                 Latest version: https://github.com/crifan/honkit_template
