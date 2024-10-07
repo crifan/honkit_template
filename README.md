@@ -383,9 +383,15 @@ make deploy
 
 ## 其他说明
 
-### 备份的`honkit_node_modules.7z`
+### 备份的`honkit`的`node_modules`的压缩包
 
-新增了`common/config/common/backup/honkit_node_modules.7z`，是本地Mac中已安装好的`generated/honkit/`的压缩包，包括`node_modules`和`package.json`
+新增了：
+
+* `common/config/common/backup/`
+  * `honkit_v4.0.7_node_modules.7z`
+  * `honkit_v6.0.0_node_modules.7z`
+
+是本地Mac中已安装好的`generated/honkit/`的压缩包，包括`node_modules`和`package.json`
 
 作用：万一，自己的或别人node_modules的环境被破坏了，或者想要换电脑但快速搭建`HonKit`环境，则可以快速的直接用此`honkit_node_modules.7z`，解压后移动到`generated/honkit`，即可。
 
