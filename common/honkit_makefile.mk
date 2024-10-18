@@ -9,6 +9,22 @@
 CURRENT_USER  := $(shell whoami)
 $(info CURRENT_USER=$(CURRENT_USER))
 
+# 检查系统中是否有 python 命令
+PYTHON_CMD := $(shell which python 2>/dev/null)
+ifeq ($(PYTHON_CMD),)
+  # 如果没有 python 命令,则使用 python3
+  PYTHON_CMD := python3
+else
+  # 检查 python 版本是否为 3.x
+  PYTHON_VERSION := $(shell python -c "import sys; print(sys.version_info[0])" 2>/dev/null)
+  ifneq ($(PYTHON_VERSION),3)
+    # 如果 python 不是 3.x 版本,则使用 python3
+    PYTHON_CMD := python3
+  endif
+endif
+
+$(info Using Python command: $(PYTHON_CMD))
+
 ################################################################################
 # Global Config
 ################################################################################
@@ -217,7 +233,6 @@ EPUB_NAME = $(BOOK_NAME).epub
 MOBI_NAME = $(BOOK_NAME).mobi
 
 # ZIP_NAME = $(BOOK_NAME).zip
-
 WEBSITE_FULLNAME = $(WEBSITE_PATH)
 PDF_FULLNAME = $(PDF_PATH)/$(PDF_NAME)
 EPUB_FULLNAME = $(EPUB_PATH)/$(EPUB_NAME)
@@ -354,7 +369,7 @@ clean_all: clean_generated_all clean_debug clean_release
 
 ## Generate README.md from ../README_template.md and README_current.json
 generate_readme_md: clean_generated_readme_md
-	@python $(GENERATE_README_MD_FILE)
+	@$(PYTHON_CMD) $(GENERATE_README_MD_FILE)
 
 ## copy README.md to ./src
 copy_readme: generate_readme_md
@@ -366,11 +381,11 @@ copy_gitignore:
 
 ## Sync README_current.json to book_current.json
 sync_readme_to_book:
-	@python $(SYNC_README_JSON_TO_BOOK_JSON_FILE)
+	@$(PYTHON_CMD) $(SYNC_README_JSON_TO_BOOK_JSON_FILE)
 
 ## Generate book.json from ../book_common.json and book_current.json
 generate_book_json: clean_generated_book_json
-	@python $(GENERATE_BOOK_JSON_FILE)
+	@$(PYTHON_CMD) $(GENERATE_BOOK_JSON_FILE)
 
 ## sync content
 sync_content: sync_readme_to_book generate_book_json generate_readme_md copy_readme copy_gitignore
@@ -483,7 +498,7 @@ ifeq ($(ENABLE_COMMIT_GITHUB_IO), true)
 	pwd
 	@echo update readme.md of local github.io
 	if [ $(ENABLE_UPDATE_GITHUB_IO_README) == true ]; then \
-		python $(UPDATE_GITHUB_IO_README_FILE) --curBookRepoName $(BOOK_NAME) --localGithubIoPath $(GITHUB_IO_PATH); \
+		$(PYTHON_CMD) $(UPDATE_GITHUB_IO_README_FILE) --curBookRepoName $(BOOK_NAME) --localGithubIoPath $(GITHUB_IO_PATH); \
 	else \
 		echo "Ignored update README.md before commit $(BOOK_NAME) to github.io"; \
 	fi;
