@@ -1,6 +1,6 @@
 # HonKit模板
 
-最后更新：`20241007`
+最后更新：`20250101`
 
 ## 项目代码仓库
 
@@ -382,6 +382,42 @@ make deploy
 去发布，即可。
 
 ## 其他说明
+
+### 从Gitbook转换为Honkit
+
+
+* 更换`node_modules`
+  ```bash
+  rm  node_modules
+  ln -s ../../generated/honkit/node_modules node_modules
+  ```
+* 更新`Makefile`
+  * 从
+    * `include ../../common/gitbook_makefile.mk`
+  * 改为
+    * `include ../../common/honkit_makefile.mk`
+
+举例：
+
+```bash
+➜  python_regex_re_intro git:(master) pwd
+/Users/crifan/dev/dev_root/ebook/honkit/honkit_template/books/python_regex_re_intro
+➜  python_regex_re_intro git:(master) ll 
+total 40
+-rw-r--r--   1 crifan  staff    40B  1  1 09:48 Makefile
+-rw-r--r--   1 crifan  staff   2.0K  1  1 09:48 README.md
+-rw-r--r--   1 crifan  staff   526B  1  1 09:48 README_current.json
+-rw-r--r--   1 crifan  staff   3.5K  1  1 09:48 book.json
+-rw-r--r--   1 crifan  staff   807B  1  1 09:48 book_current.json
+lrwxr-xr-x   1 crifan  staff    36B  1  1 09:48 node_modules -> ../../generated/gitbook/node_modules
+drwxr-xr-x  15 crifan  staff   480B  1  1 09:48 src
+➜  python_regex_re_intro git:(master) rm  node_modules 
+➜  python_regex_re_intro git:(master) ✗ ln -s ../../generated/honkit/node_modules node_modules      
+➜  python_regex_re_intro git:(master) ✗ cat Makefile 
+include ../../common/gitbook_makefile.mk
+➜  python_regex_re_intro git:(master) ✗ cat Makefile
+include ../../common/honkit_makefile.mk
+```
 
 ### 备份的`honkit`的`node_modules`的压缩包
 
